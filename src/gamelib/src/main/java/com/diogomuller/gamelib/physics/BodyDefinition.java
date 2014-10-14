@@ -7,13 +7,13 @@ import org.jbox2d.dynamics.BodyDef;
  */
 public class BodyDefinition {
     private int actorID;
-    private BodyDef bd;
+    private BodyDef definition;
 
-        public BodyDefinition(int _actorID, BodyDef _bd) {
-            bd = _bd;
-            actorID = _actorID;
+        public BodyDefinition(int actorID, BodyDef bodyDef) {
+            this.definition = bodyDef;
+            this.actorID = actorID;
         }
 
     public int getActorID() { return actorID; }
-    public BodyDef getBd() { return bd; }
+    public BodyDef getBd() { return definition; }
 }
