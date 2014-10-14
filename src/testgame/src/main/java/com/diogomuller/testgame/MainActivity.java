@@ -1,12 +1,18 @@
 package com.diogomuller.testgame;
 
+import android.content.Context;
+import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.diogomuller.gamelib.core.GameActivity;
+import com.diogomuller.gamelib.core.SceneView;
+import com.diogomuller.gamelib.node.RectangleNode;
 
-public class MainActivity extends ActionBarActivity {
+
+public class MainActivity extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,23 +20,23 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public class TestScreen extends SceneView {
+        private RectangleNode bob;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+        public TestScreen(Context context) {
+            super(context);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+            bob = new RectangleNode(null, 100, 100);
         }
-        return super.onOptionsItemSelected(item);
+
+        @Override
+        protected void draw(Canvas canvas, float deltaTime) {
+            bob.draw(canvas, deltaTime);
+        }
+
+        @Override
+        protected void update(float deltaTime) {
+            bob.update(deltaTime);
+        }
     }
 }
