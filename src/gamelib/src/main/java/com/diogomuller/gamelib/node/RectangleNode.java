@@ -4,11 +4,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import org.jbox2d.common.Vec2;
+
 /**
  * Created by Diogo on 14/10/2014.
  */
 public class RectangleNode extends Node {
     private Paint paint = new Paint();
+
+    public RectangleNode(Node parent, float width, float height) {
+        super(parent);
+        this.size = new Vec2(width, height);
+    }
 
     @Override
     public void draw(Canvas canvas, float deltaTime) {
