@@ -16,6 +16,8 @@ public class GameActivity extends Activity {
     private Stack<View> pastViews;
     private View currentView = null;
 
+    private static int nextId = 0;
+
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -37,5 +39,9 @@ public class GameActivity extends Activity {
         }
 
         currentView = pastViews.pop();
+    }
+
+    public static int getNextId() {
+        return (nextId++);
     }
 }

@@ -9,7 +9,6 @@ import android.view.View;
  */
 public abstract class SceneView extends View {
 
-
     float startTime;
     float elapsedTime;
 
