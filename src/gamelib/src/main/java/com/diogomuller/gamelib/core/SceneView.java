@@ -2,6 +2,7 @@ package com.diogomuller.gamelib.core;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.View;
 
 import com.diogomuller.gamelib.node.Node;
@@ -33,8 +34,8 @@ public abstract class SceneView extends View {
     //endregion Attributes
 
     //region Physics Attributes
-    public int velIterations = 6;
-    public int posIterations = 6;
+    public int velIterations = 1;
+    public int posIterations = 1;
 
     private int bodyCount = 0;
 
@@ -122,7 +123,7 @@ public abstract class SceneView extends View {
 
         // Run physics if any bodies exist.
         if(bodyCount > 0) {
-            physicsWorld.step(deltaTime, velIterations, posIterations);
+            physicsWorld.step(deltaTime/1000.0f, velIterations, posIterations);
         }
     }
     //endregion Game Cycle Methods

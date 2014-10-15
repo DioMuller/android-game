@@ -9,6 +9,7 @@ import com.diogomuller.gamelib.core.GameActivity;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.physics.BodyDefinition;
 
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -202,15 +203,7 @@ public class Node {
 
         //TODO: Non-fixed forms.
         PolygonShape shape = new PolygonShape();
-
-        Vec2[] verts = new Vec2[4];
-
-        verts[0] = new Vec2(position.x - (size.x / 2), position.y - (size.y / 2));
-        verts[1] = new Vec2(position.x + (size.x / 2), position.y - (size.y / 2));
-        verts[2] = new Vec2(position.x + (size.x / 2), position.y + (size.y / 2));
-        verts[3] = new Vec2(position.x - (size.x / 2), position.y + (size.y / 2));
-
-        shape.set(verts, verts.length);
+        shape.setAsBox(size.x, size.y, position, rotation * 0.0174532925f);
         //END TODO: Non-fixed forms
 
         // Attach Fixture
