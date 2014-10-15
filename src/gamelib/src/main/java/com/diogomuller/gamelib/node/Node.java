@@ -3,11 +3,18 @@ package com.diogomuller.gamelib.node;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.transition.Scene;
 
 import com.diogomuller.gamelib.core.GameActivity;
+import com.diogomuller.gamelib.core.SceneView;
+import com.diogomuller.gamelib.physics.BodyDefinition;
 
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +33,18 @@ public class Node {
     private Node parent;
     private List<Node> children;
 
-    protected boolean visible = true;
-    protected Vec2 position = new Vec2(0.0f, 0.0f);
-    protected Vec2 size = new Vec2(20.0f, 20.0f);
-    protected float rotation = 0.0f;
+    private boolean visible = true;
+    private Vec2 position = new Vec2(0.0f, 0.0f);
+    private Vec2 size = new Vec2(20.0f, 20.0f);
+    private float rotation = 0.0f;
+
+    protected float friction;
+    protected float density;
+    protected float restitution;
     //endregion Attributes
 
     //region Constructor
-    public Node(Node parent) {
-        this.parent = parent;
-        parent.addChild(this);
+    public Node() {
         this.children = new ArrayList<Node>();
 
         this.id = GameActivity.getNextId();
@@ -60,7 +69,11 @@ public class Node {
      * @param position New Position.
      */
     public void setPosition(Vec2 position){
-        this.position = position;
+        if( body == null ) {
+            this.position = position;
+        } else {
+            body.setTransform(position, body.getAngle());
+        }
     }
 
     /**
@@ -68,7 +81,11 @@ public class Node {
      * @return Current Node Position.
      */
     public Vec2 getPosition() {
-        return position;
+        if( body == null ) {
+            return position;
+        } else {
+            return body.getPosition();
+        }
     }
     //endregion Position
 
@@ -96,7 +113,11 @@ public class Node {
      * @param rotation New rotation.
      */
     public void setRotation(float rotation) {
-        this.rotation = rotation;
+        if( body == null ) {
+            this.rotation = rotation;
+        } else {
+            body.setTransform(body.getPosition(), rotation * 0.0174532925f);
+        }
     }
 
     /**
@@ -104,7 +125,11 @@ public class Node {
      * @return Node current rotation.
      */
     public float getRotation() {
-        return rotation;
+        if( body == null ) {
+            return rotation;
+        } else {
+            return body.getAngle() * 57.2957795786f;
+        }
     }
     //endregion Rotation
 
@@ -139,6 +164,79 @@ public class Node {
 
     public void removeChild(Node node){
         children.remove(node);
+        node.setParent(null);
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+        if(parent != null) parent.addChild(this);
     }
     //endregion Node Methods
+
+    //region Physics Methods
+    public void createPhysicsBody(float density, float friction, float restitution) {
+        // Do not create another body if one already exists.
+        if( body != null ) return;
+
+        // Save the values
+        this.friction = friction;
+        this.density = density;
+        this.restitution = restitution;
+
+        // Create Body
+        BodyDef definition = new BodyDef();
+
+        if(density > 0) {
+            definition.type = BodyType.DYNAMIC;
+        } else {
+            definition.type = BodyType.STATIC;
+        }
+
+        definition.position = position;
+
+        SceneView.getCurrentInstance().requestBodyCreation(new BodyDefinition(this, definition));
+    }
+
+    public void onBodyCreation(Body body) {
+        this.body = body;
+
+        //TODO: Non-fixed forms.
+        PolygonShape shape = new PolygonShape();
+
+        Vec2[] verts = new Vec2[4];
+
+        verts[0] = new Vec2(position.x - (size.x / 2), position.y - (size.y / 2));
+        verts[1] = new Vec2(position.x + (size.x / 2), position.y - (size.y / 2));
+        verts[2] = new Vec2(position.x + (size.x / 2), position.y + (size.y / 2));
+        verts[3] = new Vec2(position.x - (size.x / 2), position.y + (size.y / 2));
+
+        shape.set(verts, verts.length);
+        //END TODO: Non-fixed forms
+
+        // Attach Fixture
+        FixtureDef fixture = new FixtureDef();
+        fixture.shape = shape;
+        fixture.density = density;
+        fixture.friction = friction;
+        fixture.restitution = restitution;
+
+        // Resets position and rotation to the ones before creating the body.
+        setPosition(position);
+        setRotation(rotation);
+
+        body.createFixture(fixture);
+    }
+
+    public void destroyPhysicsBody() {
+        if(body == null) return;
+
+        Body toDestroy = body;
+        body = null;
+
+        setPosition(toDestroy.getPosition());
+        setRotation(toDestroy.getAngle() * 57.2957795786f);
+
+        SceneView.getCurrentInstance().destroyBody(toDestroy);
+    }
+    //endregion Physics Methods
 }

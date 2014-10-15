@@ -12,18 +12,19 @@ import org.jbox2d.common.Vec2;
 public class RectangleNode extends Node {
     private Paint paint = new Paint();
 
-    public RectangleNode(Node parent, float width, float height) {
-        super(parent);
-        this.size = new Vec2(width, height);
+    public RectangleNode(float width, float height) {
+        super();
+        this.setSize(new Vec2(width, height));
+        createPhysicsBody(1.0f, 1.0f, 1.0f);
     }
 
     @Override
     public void draw(Canvas canvas, float deltaTime) {
-        canvas.rotate(-rotation);
+        canvas.rotate(-getRotation());
         paint.setColor(Color.rgb(255, 0, 0));
 
-        canvas.drawRect(position.x - (size.x / 2), position.y - (size.y/2),
-                position.x + (size.x / 2), position.y + (size.y/2),
+        canvas.drawRect(getPosition().x - (getSize().x / 2), getPosition().y - (getSize().y/2),
+                getPosition().x + (getSize().x / 2), getPosition().y + (getSize().y/2),
                 paint);
 
         canvas.restore();

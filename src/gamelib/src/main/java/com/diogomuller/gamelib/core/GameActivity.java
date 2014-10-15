@@ -15,10 +15,15 @@ import java.util.Stack;
  * Created by Diogo on 04/10/2014.
  */
 public class GameActivity extends Activity {
+
+    //region Static Attributes
+    private static int nextId = 0;
+    //endregion Static Attributes
+
+    //region Attributes
     private Stack<View> pastViews;
     private View currentView = null;
-
-    private static int nextId = 0;
+    //endregion Attributes
 
     @Override
     protected void onCreate(Bundle savedInstance) {
@@ -43,7 +48,9 @@ public class GameActivity extends Activity {
         currentView = pastViews.pop();
     }
 
+    //region Static Methods
     public static int getNextId() {
         return (nextId++);
     }
+    //endregion Static Methods
 }

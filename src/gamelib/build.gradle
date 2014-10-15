@@ -1,10 +1,9 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 'android-L'
-    buildToolsVersion "20.0.0"
-
-    defaultConfig {
+        compileSdkVersion 20
+        buildToolsVersion '19.1.0'
+        defaultConfig {
         applicationId "com.diogomuller.gamelib"
         minSdkVersion 8
         targetSdkVersion 8

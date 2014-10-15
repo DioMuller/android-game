@@ -11,13 +11,15 @@ import com.diogomuller.gamelib.core.GameActivity;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.node.RectangleNode;
 
+import org.jbox2d.common.Vec2;
+
 
 public class MainActivity extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(new TestScreen(this));
     }
 
     public class TestScreen extends SceneView {
@@ -26,7 +28,11 @@ public class MainActivity extends GameActivity {
         public TestScreen(Context context) {
             super(context);
 
-            bob = new RectangleNode(null, 100, 100);
+            bob = new RectangleNode(100, 100);
+            bob.setPosition(new Vec2(150, 240));
+            bob.setRotation(30.0f);
+
+            this.setGravity(new Vec2(0,-10));
         }
 
         @Override

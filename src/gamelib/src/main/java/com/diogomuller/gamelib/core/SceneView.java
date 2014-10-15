@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
 
+import com.diogomuller.gamelib.node.Node;
 import com.diogomuller.gamelib.physics.BodyDefinition;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -17,35 +19,54 @@ import java.util.Vector;
  */
 public abstract class SceneView extends View {
 
-    float startTime;
-    float elapsedTime;
+    //region Singleton
+    private static SceneView instance = null;
+
+    public static SceneView getCurrentInstance() { return instance; }
+    //endregion Singleton
+
+    //region Attributes
+    private float startTime;
+    private float elapsedTime;
+
+    private Node root;
+    //endregion Attributes
 
     //region Physics Attributes
-    public static int velIterations = 6;
-    public static int posIterations = 6;
+    public int velIterations = 6;
+    public int posIterations = 6;
 
-    private static int bodyCount = 0;
+    private int bodyCount = 0;
 
-    private static Vec2 gravity = new Vec2(0,0);
+    private Vec2 gravity = new Vec2(0,0);
 
-    private static final Vector<Body> bodyDestroyQueue = new Vector<Body>();
-    private static final Vector<BodyDefinition> bodyCreateQueue = new Vector<BodyDefinition>();
+    private final Vector<Body> bodyDestroyQueue = new Vector<Body>();
+    private final Vector<BodyDefinition> bodyCreateQueue = new Vector<BodyDefinition>();
 
     public boolean stop = false;
     private boolean running = false;
     private World physicsWorld = null;
     //endregion Physics Attributes
 
+    //region Constructor
     public SceneView(Context context) {
         super(context);
+
+        instance = this;
 
         startTime = System.nanoTime();
         elapsedTime = 0;
 
         physicsWorld = new World(gravity);
         physicsWorld.setAllowSleep(true);
-    }
 
+        root = new Node();
+        root.setPosition(new Vec2(0,0));
+        root.setSize(new Vec2(0,0));
+    }
+    //endregion Constructor
+
+    //region Android Methods
     @Override
     protected final void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -57,12 +78,75 @@ public abstract class SceneView extends View {
         updatePhysics(deltaTime);
         update(deltaTime);
         draw(canvas, deltaTime);
+
+        this.invalidate();
+    }
+    //endregion Android Methods
+
+    //region Node Methods
+    public void addNode(Node node){
+        root.addChild(node);
     }
 
-    protected abstract void draw(Canvas canvas, float deltaTime);
-    protected abstract void update(float deltaTime);
+    public void removeChild(Node node){
+        root.removeChild(node);
+    }
+    //endregion Node Methods
+
+    //region Game Cycle Methods
+    protected void draw(Canvas canvas, float deltaTime) {
+
+    }
+
+    protected void update(float deltaTime) {
+
+    }
 
     protected void updatePhysics(float deltaTime) {
-        physicsWorld.step(deltaTime, velIterations, posIterations);
+        // Destroy bodies on Destroy Queue
+        if(bodyDestroyQueue.size() > 0) {
+            for(Body body: bodyDestroyQueue) {
+                physicsWorld.destroyBody(body);
+                bodyCount--;
+            }
+
+            bodyDestroyQueue.clear();
+        }
+
+        // Create bodies on the creation queue
+        if(bodyCreateQueue.size() > 0) {
+            for(BodyDefinition definition : bodyCreateQueue) {
+                definition.getActor().onBodyCreation(physicsWorld.createBody(definition.getDefinition()));
+            }
+        }
+
+        // Run physics if any bodies exist.
+        if(bodyCount > 0) {
+            physicsWorld.step(deltaTime, velIterations, posIterations);
+        }
     }
+    //endregion Game Cycle Methods
+
+    //region Physics Methods
+    public void requestBodyCreation(BodyDefinition definition) {
+        bodyCreateQueue.add(definition);
+        bodyCount++;
+    }
+
+    public void destroyBody(Body body) {
+        bodyDestroyQueue.add(body);
+    }
+
+    public void setGravity(Vec2 gravity) {
+        this.gravity = gravity;
+
+        if(physicsWorld != null ) {
+            physicsWorld.setGravity(gravity);
+        }
+    }
+
+    public Vec2 getGravity() {
+        return this.gravity;
+    }
+    //endregion Physics Methods
 }

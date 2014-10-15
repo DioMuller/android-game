@@ -1,19 +1,21 @@
 package com.diogomuller.gamelib.physics;
 
+import com.diogomuller.gamelib.node.Node;
+
 import org.jbox2d.dynamics.BodyDef;
 
 /**
  * Created by Diogo on 13/10/2014.
  */
 public class BodyDefinition {
-    private int actorID;
+    private Node actor;
     private BodyDef definition;
 
-        public BodyDefinition(int actorID, BodyDef bodyDef) {
+        public BodyDefinition(Node actor, BodyDef bodyDef) {
             this.definition = bodyDef;
-            this.actorID = actorID;
+            this.actor = actor;
         }
 
-    public int getActorID() { return actorID; }
-    public BodyDef getBd() { return definition; }
+    public Node getActor() { return actor; }
+    public BodyDef getDefinition() { return definition; }
 }
