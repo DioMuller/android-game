@@ -15,7 +15,7 @@ public class RectangleNode extends Node {
     public RectangleNode(float width, float height) {
         super();
         this.setSize(new Vec2(width, height));
-        createPhysicsBody(1.0f, 1.0f, 1.0f);
+        createPhysicsBody(0.5f, 0.5f, 0.5f);
     }
 
     @Override
