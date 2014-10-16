@@ -2,6 +2,7 @@ package com.diogomuller.gamelib.core;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -47,11 +48,18 @@ public abstract class SceneView extends View {
     public boolean stop = false;
     private boolean running = false;
     private World physicsWorld = null;
+
+    private static float DefaultPPM = 192;
+    private static float PPM = 1.0f;
     //endregion Physics Attributes
 
     //region Constructor
     public SceneView(Context context) {
         super(context);
+
+        // TODO: Parametrize?
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        PPM = Math.max(metrics.widthPixels / 1920.0f, metrics.heightPixels / 1080.0f ) * DefaultPPM;
 
         instance = this;
 
@@ -64,6 +72,7 @@ public abstract class SceneView extends View {
         root = new Node();
         root.setPosition(new Vec2(0,0));
         root.setSize(new Vec2(0,0));
+
     }
     //endregion Constructor
 
@@ -149,5 +158,17 @@ public abstract class SceneView extends View {
     public Vec2 getGravity() {
         return this.gravity;
     }
+
+    public static Vec2 screenToWorld(Vec2 coords) {
+        return new Vec2(coords.x / PPM, coords.y / PPM);
+    }
+
+    public static Vec2 worldToScreen(Vec2 coords) {
+        return new Vec2(coords.x / PPM, coords.y / PPM);
+    }
+
+    public static float getPPM() { return PPM; }
+    public static float getMPP() { return 1.0f / PPM; }
+
     //endregion Physics Methods
 }

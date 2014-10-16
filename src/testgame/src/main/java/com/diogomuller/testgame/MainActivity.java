@@ -24,13 +24,13 @@ public class MainActivity extends GameActivity {
 
     public class TestScreen extends SceneView {
         private RectangleNode bob;
+        private RectangleNode bobo;
 
         public TestScreen(Context context) {
             super(context);
 
-            bob = new RectangleNode(100, 100);
-            bob.setPosition(new Vec2(150, 240));
-            bob.setRotation(30.0f);
+            bob = new RectangleNode(10, 10, 15, 24, 30);
+            bobo = new RectangleNode(10,10, 10, 20, 0);
 
             this.setGravity(new Vec2(0,-10));
         }
@@ -38,11 +38,13 @@ public class MainActivity extends GameActivity {
         @Override
         protected void draw(Canvas canvas, float deltaTime) {
             bob.draw(canvas, deltaTime);
+            bobo.draw(canvas, deltaTime);
         }
 
         @Override
         protected void update(float deltaTime) {
             bob.update(deltaTime);
+            bobo.update(deltaTime);
         }
     }
 }

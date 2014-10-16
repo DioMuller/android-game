@@ -12,10 +12,13 @@ import org.jbox2d.common.Vec2;
 public class RectangleNode extends Node {
     private Paint paint = new Paint();
 
-    public RectangleNode(float width, float height) {
+    public RectangleNode(float width, float height, float x, float y, float rotation) {
         super();
         this.setSize(new Vec2(width, height));
-        createPhysicsBody(0.5f, 0.5f, 0.5f);
+        this.setPosition(new Vec2(x,y));
+        this.setRotation(rotation);
+
+        createPhysicsBody(1.0f, 0.2f, 0.5f);
     }
 
     @Override

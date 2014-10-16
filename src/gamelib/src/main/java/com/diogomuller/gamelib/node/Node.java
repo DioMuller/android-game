@@ -83,9 +83,9 @@ public class Node {
      */
     public Vec2 getPosition() {
         if( body == null ) {
-            return position;
+            return SceneView.worldToScreen(position);
         } else {
-            return body.getPosition();
+            return SceneView.worldToScreen(body.getPosition());
         }
     }
     //endregion Position
@@ -104,7 +104,7 @@ public class Node {
      * @return Current Node size.
      */
     public Vec2 getSize() {
-        return size;
+        return SceneView.worldToScreen(size);
     }
     //endregion Size
 
@@ -193,7 +193,7 @@ public class Node {
             definition.type = BodyType.STATIC;
         }
 
-        definition.position = position;
+        definition.position = SceneView.screenToWorld(this.position);
 
         SceneView.getCurrentInstance().requestBodyCreation(new BodyDefinition(this, definition));
     }
@@ -212,12 +212,11 @@ public class Node {
         fixture.density = density;
         fixture.friction = friction;
         fixture.restitution = restitution;
-
         // Resets position and rotation to the ones before creating the body.
         setPosition(position);
         setRotation(rotation);
 
-        body.createFixture(fixture);
+        this.body.createFixture(fixture);
     }
 
     public void destroyPhysicsBody() {
