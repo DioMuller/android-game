@@ -7,11 +7,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.diogomuller.gamelib.node.Node;
-import com.diogomuller.gamelib.physics.BodyDefinition;
-
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.World;
 
 import java.util.List;
 import java.util.Vector;
@@ -34,45 +29,14 @@ public abstract class SceneView extends View {
     private Node root;
     //endregion Attributes
 
-    //region Physics Attributes
-    public int velIterations = 1;
-    public int posIterations = 1;
-
-    private int bodyCount = 0;
-
-    private Vec2 gravity = new Vec2(0,0);
-
-    private final Vector<Body> bodyDestroyQueue = new Vector<Body>();
-    private final Vector<BodyDefinition> bodyCreateQueue = new Vector<BodyDefinition>();
-
-    public boolean stop = false;
-    private boolean running = false;
-    private World physicsWorld = null;
-
-    private static float DefaultPPM = 192;
-    private static float PPM = 1.0f;
-    //endregion Physics Attributes
-
     //region Constructor
     public SceneView(Context context) {
         super(context);
-
-        // TODO: Parametrize?
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        PPM = Math.max(metrics.widthPixels / 1920.0f, metrics.heightPixels / 1080.0f ) * DefaultPPM;
 
         instance = this;
 
         startTime = System.nanoTime();
         elapsedTime = 0;
-
-        physicsWorld = new World(gravity);
-        physicsWorld.setAllowSleep(true);
-
-        root = new Node();
-        root.setPosition(new Vec2(0,0));
-        root.setSize(new Vec2(0,0));
-
     }
     //endregion Constructor
 
@@ -85,7 +49,6 @@ public abstract class SceneView extends View {
         startTime = System.nanoTime();
         elapsedTime += deltaTime;
 
-        updatePhysics(deltaTime);
         update(deltaTime);
         draw(canvas, deltaTime);
 
@@ -111,64 +74,5 @@ public abstract class SceneView extends View {
     protected void update(float deltaTime) {
 
     }
-
-    protected void updatePhysics(float deltaTime) {
-        // Destroy bodies on Destroy Queue
-        if(bodyDestroyQueue.size() > 0) {
-            for(Body body: bodyDestroyQueue) {
-                physicsWorld.destroyBody(body);
-                bodyCount--;
-            }
-
-            bodyDestroyQueue.clear();
-        }
-
-        // Create bodies on the creation queue
-        if(bodyCreateQueue.size() > 0) {
-            for(BodyDefinition definition : bodyCreateQueue) {
-                definition.getActor().onBodyCreation(physicsWorld.createBody(definition.getDefinition()));
-            }
-        }
-
-        // Run physics if any bodies exist.
-        if(bodyCount > 0) {
-            physicsWorld.step(deltaTime/1000.0f, velIterations, posIterations);
-        }
-    }
     //endregion Game Cycle Methods
-
-    //region Physics Methods
-    public void requestBodyCreation(BodyDefinition definition) {
-        bodyCreateQueue.add(definition);
-        bodyCount++;
-    }
-
-    public void destroyBody(Body body) {
-        bodyDestroyQueue.add(body);
-    }
-
-    public void setGravity(Vec2 gravity) {
-        this.gravity = gravity;
-
-        if(physicsWorld != null ) {
-            physicsWorld.setGravity(gravity);
-        }
-    }
-
-    public Vec2 getGravity() {
-        return this.gravity;
-    }
-
-    public static Vec2 screenToWorld(Vec2 coords) {
-        return new Vec2(coords.x / PPM, coords.y / PPM);
-    }
-
-    public static Vec2 worldToScreen(Vec2 coords) {
-        return new Vec2(coords.x / PPM, coords.y / PPM);
-    }
-
-    public static float getPPM() { return PPM; }
-    public static float getMPP() { return 1.0f / PPM; }
-
-    //endregion Physics Methods
 }
