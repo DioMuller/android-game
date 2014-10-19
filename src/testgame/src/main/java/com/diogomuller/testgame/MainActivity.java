@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import com.diogomuller.gamelib.core.GameActivity;
 import com.diogomuller.gamelib.core.SceneView;
 
-import org.jbox2d.common.Vec2;
-
 
 public class MainActivity extends GameActivity {
 
@@ -28,11 +26,11 @@ public class MainActivity extends GameActivity {
         }
 
         @Override
-        protected void draw(Canvas canvas, float deltaTime) {
+        public void draw(Canvas canvas) {
         }
 
         @Override
-        protected void update(float deltaTime) {
+        public void update(float deltaTime) {
         }
     }
 }

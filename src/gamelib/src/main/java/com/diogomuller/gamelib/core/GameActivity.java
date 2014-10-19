@@ -1,10 +1,14 @@
 package com.diogomuller.gamelib.core;
 
 import android.app.Activity;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.diogomuller.gamelib.math.Vector2;
+import com.diogomuller.gamelib.node.Node;
 
 import org.jbox2d.dynamics.World;
 
