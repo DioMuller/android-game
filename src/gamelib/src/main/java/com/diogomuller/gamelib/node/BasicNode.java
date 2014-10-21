@@ -13,7 +13,7 @@ import java.util.List;
  *
  * Created by Diogo on 13/10/2014.
  */
-public class BasicNode implements Node {
+public abstract class BasicNode implements Node {
 
     //region Attributes
     private int id;
@@ -44,12 +44,14 @@ public class BasicNode implements Node {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        if( !visible ) return;
+    public boolean draw(Canvas canvas) {
+        if( !visible ) return false;
 
         for(Node child : children) {
             child.draw(canvas);
         }
+
+        return true;
     }
     //endregion Game Cycle Methods
 

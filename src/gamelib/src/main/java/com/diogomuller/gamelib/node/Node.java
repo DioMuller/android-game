@@ -12,7 +12,7 @@ public interface Node {
     //region Game Cycle Methods
     public void update(float deltaTime);
 
-    public void draw(Canvas canvas);
+    public boolean draw(Canvas canvas);
     //endregion Game Cycle Methods
 
     //region Getters and Setters
