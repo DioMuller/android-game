@@ -69,10 +69,12 @@ public class SceneView extends View implements Node {
     }
 
     @Override
-    public void draw(Canvas canvas){
+    public boolean draw(Canvas canvas){
         for(Node child : children) {
             child.draw(canvas);
         }
+
+        return true;
     }
     //endregion Game Cycle
 
