@@ -69,9 +69,9 @@ public class SceneView extends View implements Node {
     }
 
     @Override
-    public boolean draw(Canvas canvas){
+    public boolean draw(float deltaTime, Canvas canvas){
         for(Node child : children) {
-            child.draw(canvas);
+            child.draw(deltaTime, canvas);
         }
 
         return true;

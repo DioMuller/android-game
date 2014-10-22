@@ -20,8 +20,8 @@ public class BitmapNode extends BasicNode {
     }
 
     @Override
-    public boolean draw(Canvas canvas) {
-        if( !super.draw(canvas) ) return false;
+    public boolean draw(float deltaTime, Canvas canvas) {
+        if( !super.draw(deltaTime, canvas) ) return false;
 
         //TODO: Draw Sprite
         return true;

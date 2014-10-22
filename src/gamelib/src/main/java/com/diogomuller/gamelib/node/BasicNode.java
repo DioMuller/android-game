@@ -44,11 +44,11 @@ public abstract class BasicNode implements Node {
     }
 
     @Override
-    public boolean draw(Canvas canvas) {
+    public boolean draw(float deltaTime, Canvas canvas) {
         if( !visible ) return false;
 
         for(Node child : children) {
-            child.draw(canvas);
+            child.draw(deltaTime, canvas);
         }
 
         return true;
