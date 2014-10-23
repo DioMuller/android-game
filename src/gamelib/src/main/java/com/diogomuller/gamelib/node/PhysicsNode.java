@@ -11,7 +11,7 @@ public class PhysicsNode extends BitmapNode {
     Body body;
     //endregion Attributes
 
-    public PhysicsNode(String sprite, int animationCols){
-        super(sprite, animationCols);
+    public PhysicsNode(String sprite, int animationCols, FrameOrientation orientation){
+        super(sprite, animationCols, orientation);
     }
 }

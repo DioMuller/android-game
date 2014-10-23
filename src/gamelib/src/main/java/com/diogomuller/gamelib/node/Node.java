@@ -1,8 +1,9 @@
 package com.diogomuller.gamelib.node;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 
-import com.diogomuller.gamelib.math.Vector2;
+import org.jbox2d.common.Vec2;
 
 /**
  * Created by Diogo on 19/10/2014.
@@ -12,7 +13,7 @@ public interface Node {
     //region Game Cycle Methods
     public void update(float deltaTime);
 
-    public boolean draw(float deltaTime, Canvas canvas);
+    public boolean draw(Canvas canvas, Matrix transformations);
     //endregion Game Cycle Methods
 
     //region Getters and Setters
@@ -22,13 +23,13 @@ public interface Node {
      * Sets Node position.
      * @param position New Position.
      */
-    public void setPosition(Vector2 position);
+    public void setPosition(Vec2 position);
 
     /**
      * Gets Node position.
      * @return Current Node Position.
      */
-    public Vector2 getPosition();
+    public Vec2 getPosition();
     //endregion Position
 
     //region Size
@@ -36,13 +37,13 @@ public interface Node {
      * Sets Node size.
      * @param size New size.
      */
-    public void setSize(Vector2 size);
+    public void setSize(Vec2 size);
 
     /**
      * Gets Node size.
      * @return Current Node size.
      */
-    public Vector2 getSize();
+    public Vec2 getSize();
     //endregion Size
 
     //region Rotation
@@ -58,6 +59,21 @@ public interface Node {
      */
     public float getRotation();
     //endregion Rotation
+
+    //region Scale
+
+    /**
+     * Sets the node scale.
+     * @param scale New scale.
+     */
+    public void setScale(Vec2 scale);
+
+    /**
+     * Gets the node current scale.
+     * @return Node current scale.
+     */
+    public Vec2 getScale();
+    //endregion Scale
 
     //region Id
     public int getId();

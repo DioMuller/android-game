@@ -2,11 +2,12 @@ package com.diogomuller.gamelib.core;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.view.View;
 
-import com.diogomuller.gamelib.math.Vector2;
-import com.diogomuller.gamelib.node.BasicNode;
 import com.diogomuller.gamelib.node.Node;
+
+import org.jbox2d.common.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class SceneView extends View implements Node {
     //region Attributes
     private float startTime;
     private float elapsedTime;
+    protected Context context;
+    private Matrix matrix = new Matrix();
 
     private List<Node> children;
     //endregion Attributes
@@ -32,6 +35,8 @@ public class SceneView extends View implements Node {
     //region Constructor
     public SceneView(Context context) {
         super(context);
+
+        this.context = context;
 
         instance = this;
 
@@ -52,7 +57,7 @@ public class SceneView extends View implements Node {
         elapsedTime += deltaTime;
 
         update(deltaTime);
-        draw(canvas);
+        draw(canvas, matrix);
 
         this.invalidate();
     }
@@ -69,9 +74,9 @@ public class SceneView extends View implements Node {
     }
 
     @Override
-    public boolean draw(float deltaTime, Canvas canvas){
+    public boolean draw(Canvas canvas, Matrix matrix){
         for(Node child : children) {
-            child.draw(deltaTime, canvas);
+            child.draw(canvas, matrix);
         }
 
         return true;
@@ -80,23 +85,23 @@ public class SceneView extends View implements Node {
 
     //region Getters and Setters
     @Override
-    public void setPosition(Vector2 position) {
+    public void setPosition(Vec2 position) {
         // Nothing else to do.
     }
 
     @Override
-    public Vector2 getPosition() {
-        return new Vector2(0,0);
+    public Vec2 getPosition() {
+        return new Vec2(0,0);
     }
 
     @Override
-    public void setSize(Vector2 size) {
+    public void setSize(Vec2 size) {
         // Nothing else to do.
     }
 
     @Override
-    public Vector2 getSize() {
-        return new Vector2(0,0);
+    public Vec2 getSize() {
+        return new Vec2(0,0);
     }
 
     @Override
@@ -107,6 +112,16 @@ public class SceneView extends View implements Node {
     @Override
     public float getRotation() {
         return 0;
+    }
+
+    @Override
+    public void setScale(Vec2 scale) {
+        // Nothing else to do.
+    }
+
+    @Override
+    public Vec2 getScale() {
+        return new Vec2(1,1);
     }
 
     @Override
