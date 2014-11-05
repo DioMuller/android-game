@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/gamelib" />
-            <option value="$PROJECT_DIR$/testgame" />
+            <option value="$PROJECT_DIR$/tensecondheroes" />
           </set>
         </option>
       </GradleProjectSettings>

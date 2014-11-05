@@ -1,1 +1,1 @@
-include ':testgame', ':gamelib'
+include ':gamelib', ':tensecondheroes'
