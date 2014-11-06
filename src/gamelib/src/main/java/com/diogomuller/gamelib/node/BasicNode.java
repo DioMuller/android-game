@@ -4,8 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 
 import com.diogomuller.gamelib.core.GameActivity;
-
-import org.jbox2d.common.Vec2;
+import com.diogomuller.gamelib.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +23,10 @@ public abstract class BasicNode implements Node {
     private List<Node> children;
 
     private boolean visible = true;
-    protected Vec2 position = new Vec2(0.0f, 0.0f);
-    protected Vec2 size = new Vec2(20.0f, 20.0f);
+    protected Vector2 position = new Vector2(0.0f, 0.0f);
+    protected Vector2 size = new Vector2(20.0f, 20.0f);
     protected float rotation = 0.0f;
-    protected Vec2 scale = new Vec2(0.0f, 0.0f);
+    protected Vector2 scale = new Vector2(0.0f, 0.0f);
     //endregion Attributes
 
     //region Constructor
@@ -66,7 +65,7 @@ public abstract class BasicNode implements Node {
      * @param position New Position.
      */
     @Override
-    public void setPosition(Vec2 position){
+    public void setPosition(Vector2 position){
         this.position = position;
     }
 
@@ -75,7 +74,7 @@ public abstract class BasicNode implements Node {
      * @return Current Node Position.
      */
     @Override
-    public Vec2 getPosition() {
+    public Vector2 getPosition() {
         return position;
     }
     //endregion Position
@@ -86,7 +85,7 @@ public abstract class BasicNode implements Node {
      * @param size New size.
      */
     @Override
-    public void setSize(Vec2 size){
+    public void setSize(Vector2 size){
         this.size = size;
     }
 
@@ -95,7 +94,7 @@ public abstract class BasicNode implements Node {
      * @return Current Node size.
      */
     @Override
-    public Vec2 getSize() {
+    public Vector2 getSize() {
         return size;
     }
     //endregion Size
@@ -126,14 +125,14 @@ public abstract class BasicNode implements Node {
      * @param scale New scale.
      */
     @Override
-    public void setScale(Vec2 scale) {this.scale = scale;}
+    public void setScale(Vector2 scale) {this.scale = scale;}
 
     /**
      * Gets the node current scale.
      * @return Node current scale.
      */
     @Override
-    public Vec2 getScale() {return this.scale;}
+    public Vector2 getScale() {return this.scale;}
     //endregion Scale
 
     //region Id
