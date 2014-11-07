@@ -8,8 +8,7 @@ import android.graphics.Matrix;
 import android.util.Log;
 
 import com.diogomuller.gamelib.core.Assets;
-
-import org.jbox2d.common.Vec2;
+import com.diogomuller.gamelib.math.Vector2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,17 +41,17 @@ public class BitmapNode extends BasicNode {
 
                 // Divide Bitmap
                 if( orientation == FrameOrientation.HORIZONTAL){
-                    this.size = new Vec2(bitmap.getWidth() / animationCols, bitmap.getHeight());
+                    this.size = new Vector2(bitmap.getWidth() / animationCols, bitmap.getHeight());
                 }
                 else {
-                    this.size = new Vec2(bitmap.getWidth(), bitmap.getHeight() / animationCols);
+                    this.size = new Vector2(bitmap.getWidth(), bitmap.getHeight() / animationCols);
                 }
 
                 for( int i = 0; i < animationCols; i++ ){
                     if( orientation == FrameOrientation.VERTICAL)
-                        animationFrames[i] = Bitmap.createBitmap(bitmap, 0, (int) (i * size.y), (int) size.x, (int) size.y);
+                        animationFrames[i] = Bitmap.createBitmap(bitmap, 0, (int) (i * size.getY()), (int) size.getX(), (int) size.getY());
                     else
-                        animationFrames[i] = Bitmap.createBitmap(bitmap, (int) (i * size.x), 0, (int) size.x, (int) size.y);
+                        animationFrames[i] = Bitmap.createBitmap(bitmap, (int) (i * size.getX()), 0, (int) size.getX(), (int) size.getY());
                 }
 
             } catch( IOException ioex ) {
@@ -73,12 +72,12 @@ public class BitmapNode extends BasicNode {
     public boolean draw(Canvas canvas, Matrix transformations) {
         if( !super.draw(canvas, transformations) ) return false;
 
-        float halfWidth = size.x / 2.0f;
-        float halfHeight = size.y / 2.0f;
+        float halfWidth = size.getX() / 2.0f;
+        float halfHeight = size.getY() / 2.0f;
 
         Matrix matrix = new Matrix(transformations);
-        matrix.preTranslate(position.x - halfWidth, position.y - halfHeight);
-        matrix.preScale(scale.x, scale.y, halfWidth, halfHeight );
+        matrix.preTranslate(position.getX() - halfWidth, position.getY() - halfHeight);
+        matrix.preScale(scale.getX(), scale.getY(), halfWidth, halfHeight );
         matrix.preRotate(rotation, halfWidth, halfHeight);
 
         return true;
