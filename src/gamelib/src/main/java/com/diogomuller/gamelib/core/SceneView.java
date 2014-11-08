@@ -1,20 +1,31 @@
 package com.diogomuller.gamelib.core;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
-import android.view.View;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.opengl.GLSurfaceView.Renderer;
+import android.opengl.GLUtils;
 
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.node.Node;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 /**
  * Created by Diogo on 04/10/2014.
  */
-public class SceneView extends View implements Node {
+public class SceneView implements Renderer, Node {
 
     //region Singleton
     private static SceneView instance = null;
@@ -22,19 +33,25 @@ public class SceneView extends View implements Node {
     public static SceneView getCurrentInstance() { return instance; }
     //endregion Singleton
 
+    //region Constants
+    final int VERTEX_SIZE = (2 + 4) * 4;
+    //endregion Constants
+
     //region Attributes
     private float startTime;
     private float elapsedTime;
     protected Context context;
     private Matrix matrix = new Matrix();
+    private FloatBuffer vertices;
+    private int width = 800;
+    private int height = 480;
+    int texScene = -1;
 
     private List<Node> children;
     //endregion Attributes
 
     //region Constructor
     public SceneView(Context context) {
-        super(context);
-
         this.context = context;
 
         instance = this;
@@ -46,21 +63,114 @@ public class SceneView extends View implements Node {
     }
     //endregion Constructor
 
-    //region Android Methods
-    //@Override
-    protected final void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    //region Renderer Methods
+    @Override
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        startTime = System.nanoTime();
+    }
 
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        gl.glViewport(0, 0, width, height);
+    }
+
+    @Override
+    public final void onDrawFrame(GL10 gl) {
+        Canvas canvas = new Canvas();
+
+        //region Calculate Delta Time
         float deltaTime = (System.nanoTime() - startTime) / 1000000.0f;
         startTime = System.nanoTime();
         elapsedTime += deltaTime;
+        //endregion Calculate Delta Time
 
+        //region Game Cycle
         update(deltaTime);
         draw(canvas, matrix);
+        //endregion Game Cycle
 
-        this.invalidate();
+        //region Rendering
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+
+        gl.glMatrixMode(GL10.GL_PROJECTION);
+        gl.glLoadIdentity();
+        gl.glOrthof(0, width, 0, height, -1, 1);
+
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+        gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
+
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * VERTEX_SIZE);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        vertices = byteBuffer.asFloatBuffer();
+        vertices.put(new float[]{
+                -width / 2.0f, height / 2.0f, 0.0f, 0.0f,
+                -width / 2.0f, -height / 2.0f, 0.0f, 1.0f,
+                width / 2.0f, height / 2.0f, 1.0f, 0.0f,
+                width / 2.0f, -height / 2.0f, 1.0f, 1.0f
+        });
+        vertices.flip();
+
+        gl.glEnable(GL10.GL_TEXTURE_2D);
+
+
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, texScene);
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+
+        vertices.position(0);
+        gl.glVertexPointer(2, GL10.GL_FLOAT, VERTEX_SIZE, vertices);
+        vertices.position(2);
+        gl.glTexCoordPointer(2, GL10.GL_FLOAT, VERTEX_SIZE, vertices);
+
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        gl.glLoadIdentity();
+        gl.glTranslatef(240, 400, 0);
+
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+
+
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, 0);
+        //endregion Rendering
     }
-    //endregion Android Methods
+    //endregion Renderer Methods
+
+    //region Helper Rendering Methods
+    public int loadTexture(GL10 gl, Canvas canvas, int tex) {
+        Rect rect = new Rect();
+        Paint paint = new Paint();
+
+        width = rect.width();
+        height = rect.height();
+
+        // Create Texture
+        if(tex != -1){
+            int[] deletetexture = { tex };
+            gl.glDeleteTextures(1, deletetexture, 0);
+        }
+
+        int[] textureIds = new int[1];
+        gl.glGenTextures(1, textureIds, 0);
+        int textureId = textureIds[0];
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textureId);
+
+        gl.glTexParameterf(
+                GL10.GL_TEXTURE_2D,
+                GL10.GL_TEXTURE_MIN_FILTER,
+                GL10.GL_LINEAR);
+
+        gl.glTexParameterf(
+                GL10.GL_TEXTURE_2D,
+                GL10.GL_TEXTURE_MAG_FILTER,
+                GL10.GL_LINEAR);
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, 0);
+
+        return textureId;
+    }
+    //endregion Helper Rendering Methods
 
     //region Node Methods
 
