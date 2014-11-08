@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">Ten Second Heroes</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="option_new_game">New Game</string>
+    <string name="option_load_level">Load Level</string>
+    <string name="option_highscore">High Score</string>
+    <string name="option_settings">Settings</string>
 </resources>
