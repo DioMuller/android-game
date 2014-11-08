@@ -3,12 +3,10 @@ package com.diogomuller.gamelib.core;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.GLUtils;
 
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.node.Node;
@@ -25,12 +23,11 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Diogo on 04/10/2014.
  */
-public class SceneView implements Renderer, Node {
+public class SceneRenderer implements Renderer, Node {
 
     //region Singleton
-    private static SceneView instance = null;
-
-    public static SceneView getCurrentInstance() { return instance; }
+    private static SceneRenderer instance = null;
+    public static SceneRenderer getCurrentInstance() { return instance; }
     //endregion Singleton
 
     //region Constants
@@ -45,13 +42,14 @@ public class SceneView implements Renderer, Node {
     private FloatBuffer vertices;
     private int width = 800;
     private int height = 480;
-    int texScene = -1;
+    private int texScene = -1;
+    private final Bitmap baseBitmap;
 
     private List<Node> children;
     //endregion Attributes
 
     //region Constructor
-    public SceneView(Context context) {
+    public SceneRenderer(Context context) {
         this.context = context;
 
         instance = this;
@@ -60,6 +58,8 @@ public class SceneView implements Renderer, Node {
 
         startTime = System.nanoTime();
         elapsedTime = 0;
+
+        baseBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     }
     //endregion Constructor
 
@@ -76,7 +76,7 @@ public class SceneView implements Renderer, Node {
 
     @Override
     public final void onDrawFrame(GL10 gl) {
-        Canvas canvas = new Canvas();
+        Canvas canvas = new Canvas(baseBitmap);
 
         //region Calculate Delta Time
         float deltaTime = (System.nanoTime() - startTime) / 1000000.0f;

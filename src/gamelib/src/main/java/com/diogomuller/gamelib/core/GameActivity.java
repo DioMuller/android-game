@@ -1,6 +1,8 @@
 package com.diogomuller.gamelib.core;
 
 import android.app.Activity;
+import android.opengl.GLSurfaceView;
+import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -18,31 +20,25 @@ public class GameActivity extends Activity {
     //endregion Static Attributes
 
     //region Attributes
-    private Stack<View> pastViews;
-    private View currentView = null;
+    private GLSurfaceView screen = null;
     //endregion Attributes
 
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
 
-        pastViews = new Stack<View>();
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
+
+        screen = new GLSurfaceView(this);
+        setContentView(screen);
     }
 
-    @Override
-    public void onBackPressed(){
-        if(pastViews.isEmpty()) {
-            super.onBackPressed();
-            return;
-        }
-
-        currentView = pastViews.pop();
+    public void loadScene(Renderer renderer){
+        screen.setRenderer(renderer);
     }
 
     //region Static Methods
