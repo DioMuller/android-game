@@ -21,6 +21,7 @@ public class GameActivity extends Activity {
 
     //region Attributes
     private GLSurfaceView screen = null;
+    private Renderer renderer = null;
     //endregion Attributes
 
     @Override
@@ -34,11 +35,20 @@ public class GameActivity extends Activity {
         );
 
         screen = new GLSurfaceView(this);
+
+        if( renderer != null ){
+            screen.setRenderer(renderer);
+        }
+
         setContentView(screen);
     }
 
     public void loadScene(Renderer renderer){
-        screen.setRenderer(renderer);
+        this.renderer = renderer;
+
+        if( screen != null ) {
+            screen.setRenderer(renderer);
+        }
     }
 
     //region Static Methods
