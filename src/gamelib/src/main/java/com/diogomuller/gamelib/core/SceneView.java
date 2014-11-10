@@ -92,16 +92,9 @@ public class SceneView extends SurfaceView implements Runnable, Node {
             Canvas canvas = holder.lockCanvas();
             canvas.drawRGB(0, 0, 0);
 
-            for(int i = 0; i < 1000; i++ ) {
-                paint.setColor(Color.rgb(rng.nextInt(256),
-                        rng.nextInt(256), rng.nextInt(256)));
+            this.update(deltaTime);
+            this.draw(canvas, matrix);
 
-                canvas.drawPoint(rng.nextInt(canvas.getWidth()),
-                        rng.nextInt(canvas.getHeight()), paint);
-            }
-
-            fps.update(deltaTime);
-            fps.draw(canvas);
             holder.unlockCanvasAndPost(canvas);
         }
     }
