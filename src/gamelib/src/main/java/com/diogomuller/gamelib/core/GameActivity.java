@@ -1,8 +1,6 @@
 package com.diogomuller.gamelib.core;
 
 import android.app.Activity;
-import android.opengl.GLSurfaceView;
-import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -20,8 +18,8 @@ public class GameActivity extends Activity {
     //endregion Static Attributes
 
     //region Attributes
-    private GLSurfaceView screen = null;
-    private Renderer renderer = null;
+    private boolean created = false;
+    private SceneView screen = null;
     //endregion Attributes
 
     @Override
@@ -34,21 +32,29 @@ public class GameActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
-        screen = new GLSurfaceView(this);
-
-        if( renderer != null ){
-            screen.setRenderer(renderer);
+        if( screen == null ) {
+            screen = new SceneView(this);
         }
 
         setContentView(screen);
+        created = true;
     }
 
-    public void loadScene(Renderer renderer){
-        this.renderer = renderer;
+    @Override
+    protected void onResume(){
+        super.onResume();
+        screen.resume();
+    }
 
-        if( screen != null ) {
-            screen.setRenderer(renderer);
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        screen.pause();
+    }
+
+    public void loadScene(SceneView scene){
+        screen = scene;
+        if(created) setContentView(screen);
     }
 
     //region Static Methods
