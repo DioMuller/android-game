@@ -3,6 +3,7 @@ package com.diogomuller.gamelib.core;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -40,10 +41,12 @@ public class SceneRenderer implements Renderer, Node {
     protected Context context;
     private Matrix matrix = new Matrix();
     private FloatBuffer vertices;
-    private int width = 800;
-    private int height = 480;
+    private final int width = 800;
+    private final int height = 480;
     private int texScene = -1;
     private final Bitmap baseBitmap;
+    private FPSCounter fps;
+    protected boolean showFps = false;
 
     private List<Node> children;
     //endregion Attributes
@@ -59,6 +62,8 @@ public class SceneRenderer implements Renderer, Node {
         startTime = System.nanoTime();
         elapsedTime = 0;
 
+        fps = new FPSCounter();
+
         baseBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     }
     //endregion Constructor
@@ -71,12 +76,16 @@ public class SceneRenderer implements Renderer, Node {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        gl.glViewport(0, 0, width, height);
+        gl.glViewport(0, 0, this.width, this.height);
     }
 
     @Override
     public final void onDrawFrame(GL10 gl) {
         Canvas canvas = new Canvas(baseBitmap);
+        //Paint paint = new Paint();
+
+        //paint.setColor(Color.argb(255, 255, 255, 255));
+        canvas.drawRGB(255,255,0);
 
         //region Calculate Delta Time
         float deltaTime = (System.nanoTime() - startTime) / 1000000.0f;
@@ -90,11 +99,13 @@ public class SceneRenderer implements Renderer, Node {
         //endregion Game Cycle
 
         //region Rendering
+        texScene = loadTexture(gl, canvas, texScene);
+
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
-        gl.glOrthof(0, width, 0, height, -1, 1);
+        gl.glOrthof(0, this.width, 0, this.height, -1, 1);
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
@@ -103,16 +114,14 @@ public class SceneRenderer implements Renderer, Node {
         byteBuffer.order(ByteOrder.nativeOrder());
         vertices = byteBuffer.asFloatBuffer();
         vertices.put(new float[]{
-                -width / 2.0f, height / 2.0f, 0.0f, 0.0f,
-                -width / 2.0f, -height / 2.0f, 0.0f, 1.0f,
-                width / 2.0f, height / 2.0f, 1.0f, 0.0f,
-                width / 2.0f, -height / 2.0f, 1.0f, 1.0f
+                0.0f, height, 0.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f,
+                width, height, 1.0f, 0.0f,
+                width, 0.0f, 1.0f, 1.0f
         });
         vertices.flip();
 
         gl.glEnable(GL10.GL_TEXTURE_2D);
-
-
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, texScene);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -139,12 +148,6 @@ public class SceneRenderer implements Renderer, Node {
 
     //region Helper Rendering Methods
     public int loadTexture(GL10 gl, Canvas canvas, int tex) {
-        Rect rect = new Rect();
-        Paint paint = new Paint();
-
-        width = rect.width();
-        height = rect.height();
-
         // Create Texture
         if(tex != -1){
             int[] deletetexture = { tex };
@@ -177,6 +180,7 @@ public class SceneRenderer implements Renderer, Node {
     //region Game Cycle
     @Override
     public void update(float deltaTime) {
+        if( showFps ) fps.update(deltaTime);
         for(Node child : children) {
             child.update(deltaTime);
         }
@@ -184,6 +188,7 @@ public class SceneRenderer implements Renderer, Node {
 
     @Override
     public boolean draw(Canvas canvas, Matrix matrix){
+        if( showFps ) fps.draw(canvas);
         for(Node child : children) {
             child.draw(canvas, matrix);
         }

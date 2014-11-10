@@ -10,5 +10,6 @@ import com.diogomuller.gamelib.core.SceneRenderer;
 public class GameRenderer extends SceneRenderer {
     public GameRenderer(Context context){
         super(context);
+        this.showFps = true;
     }
 }
