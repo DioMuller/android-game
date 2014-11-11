@@ -80,6 +80,8 @@ public class BitmapNode extends BasicNode {
         matrix.preScale(scale.getX(), scale.getY(), halfWidth, halfHeight );
         matrix.preRotate(rotation, halfWidth, halfHeight);
 
+        canvas.drawBitmap(animationFrames[0], matrix, null);
+
         return true;
     }
     //endregion Game Cycle Methods

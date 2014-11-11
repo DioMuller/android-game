@@ -16,7 +16,7 @@ public class GameView extends SceneView {
 
         this.showFps = true;
 
-        PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero", 2, BitmapNode.FrameOrientation.VERTICAL);
+        PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero.png", 2, BitmapNode.FrameOrientation.VERTICAL);
         testHero.setPosition(new Vector2(100, 100));
         this.addChild(testHero);
     }

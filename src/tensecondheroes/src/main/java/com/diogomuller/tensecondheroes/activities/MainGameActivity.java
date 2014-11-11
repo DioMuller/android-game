@@ -15,7 +15,7 @@ public class MainGameActivity extends GameActivity {
 
     @Override
     public void onCreate(Bundle bundle){
-        loadScene(new GameView(this));
         super.onCreate(bundle);
+        loadScene(new GameView(this));
     }
 }

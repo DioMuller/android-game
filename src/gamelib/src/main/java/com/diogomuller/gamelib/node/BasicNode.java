@@ -26,7 +26,7 @@ public abstract class BasicNode implements Node {
     protected Vector2 position = new Vector2(0.0f, 0.0f);
     protected Vector2 size = new Vector2(20.0f, 20.0f);
     protected float rotation = 0.0f;
-    protected Vector2 scale = new Vector2(0.0f, 0.0f);
+    protected Vector2 scale = new Vector2(1.0f, 1.0f);
     //endregion Attributes
 
     //region Constructor
