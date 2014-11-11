@@ -181,6 +181,8 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     //region Node Methods
     @Override
     public void addChild(Node node) {
+        if(children.contains(node)) return;
+
         children.add(node);
         node.setParent(this);
     }

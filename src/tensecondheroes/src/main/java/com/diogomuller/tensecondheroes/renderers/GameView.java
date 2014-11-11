@@ -13,6 +13,7 @@ import com.diogomuller.gamelib.node.PhysicsNode;
 public class GameView extends SceneView {
     public GameView(Context context){
         super(context);
+
         this.showFps = true;
 
         PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero", 2, BitmapNode.FrameOrientation.VERTICAL);

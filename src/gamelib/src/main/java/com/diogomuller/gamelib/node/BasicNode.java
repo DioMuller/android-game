@@ -176,6 +176,7 @@ public abstract class BasicNode implements Node {
 
     @Override
     public void setParent(Node parent) {
+        if( this.parent == parent ) return;
         this.parent = parent;
         if(parent != null) parent.addChild(this);
     }
