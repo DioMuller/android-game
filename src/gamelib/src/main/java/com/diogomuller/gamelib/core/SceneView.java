@@ -5,8 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.node.Node;
@@ -23,7 +26,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
 
     //region Singleton
     private static SceneView instance = null;
-    public static SceneView getCurrentInstance() { return instance; }
+    public static SceneView getCurrentScene() { return instance; }
     //endregion Singleton
 
     //region Attributes
@@ -38,12 +41,14 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     Paint paint = new Paint();
     SurfaceHolder holder;
     boolean running = false;
+    protected final Vector2 canvasSize;
+    protected float canvasScale;
 
     private List<Node> children;
     //endregion Attributes
 
     //region Constructor
-    public SceneView(Context context) {
+    public SceneView(Context context, float desiredHeight) {
         super(context);
 
         this.context = context;
@@ -56,6 +61,11 @@ public class SceneView extends SurfaceView implements Runnable, Node {
 
         startTime = System.nanoTime();
         elapsedTime = 0;
+
+        DisplayMetrics display = getResources().getDisplayMetrics();
+        canvasScale = display.heightPixels / desiredHeight;
+
+        canvasSize = new Vector2(display.widthPixels / canvasScale, display.heightPixels / canvasScale);
 
         fps = new FPSCounter();
         rng = new Random();
@@ -178,6 +188,14 @@ public class SceneView extends SurfaceView implements Runnable, Node {
         return true;
     }
 
+    public Vector2 getCanvasSize(){
+        return canvasSize;
+    }
+
+    public float getCanvasScale(){
+        return canvasScale;
+    }
+
     //region Node Methods
     @Override
     public void addChild(Node node) {
@@ -198,7 +216,5 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     }
     //endregion Node Methods
 
-    //endregion Node Methods
-
-    //endregion Node Methods
+    //endregion Getters and Setters
 }

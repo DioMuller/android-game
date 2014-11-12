@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.transition.Scene;
 import android.util.Log;
 
 import com.diogomuller.gamelib.core.Assets;
+import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 
 import java.io.IOException;
@@ -21,14 +23,19 @@ public class BitmapNode extends BasicNode {
     protected String imagePath;
     protected int animationCols;
     protected Bitmap[] animationFrames;
+    protected float canvasScale = 0.0f;
+    protected float msPerFrame = 0.0f;
+    protected float timeSinceLastFrame = 0.0f;
+    protected int currentFrame = 0;
     //endregion Attributes
 
-    public BitmapNode(String sprite, int animationCols, FrameOrientation orientation) {
+    public BitmapNode(String sprite, int animationCols, FrameOrientation orientation, float msPerFrame) {
         super();
 
         this.imagePath = sprite;
         this.animationCols = animationCols;
         this.animationFrames = new Bitmap[animationCols];
+        this.msPerFrame = msPerFrame;
 
         AssetManager manager = Assets.getAssetManager();
 
@@ -65,6 +72,17 @@ public class BitmapNode extends BasicNode {
     //region Game Cycle Methods
     @Override
     public void update(float deltaTime) {
+        if( canvasScale == 0.0f ){
+            canvasScale = SceneView.getCurrentScene().getCanvasScale();
+        }
+
+        timeSinceLastFrame += deltaTime;
+
+        if( msPerFrame < timeSinceLastFrame ){
+            currentFrame = (currentFrame + 1) % animationCols;
+            timeSinceLastFrame -= msPerFrame;
+        }
+
         super.update(deltaTime);
     }
 
@@ -72,15 +90,15 @@ public class BitmapNode extends BasicNode {
     public boolean draw(Canvas canvas, Matrix transformations) {
         if( !super.draw(canvas, transformations) ) return false;
 
-        float halfWidth = size.getX() / 2.0f;
-        float halfHeight = size.getY() / 2.0f;
+        float halfWidth = (size.getX() / 2.0f) * canvasScale;
+        float halfHeight = (size.getY() / 2.0f) * canvasScale;
 
         Matrix matrix = new Matrix(transformations);
-        matrix.preTranslate(position.getX() - halfWidth, position.getY() - halfHeight);
-        matrix.preScale(scale.getX(), scale.getY(), halfWidth, halfHeight );
+        matrix.preTranslate( (position.getX() * canvasScale) - halfWidth, (position.getY() * canvasScale) - halfHeight);
+        matrix.preScale(scale.getX() * canvasScale, scale.getY() * canvasScale, halfWidth, halfHeight );
         matrix.preRotate(rotation, halfWidth, halfHeight);
 
-        canvas.drawBitmap(animationFrames[0], matrix, null);
+        canvas.drawBitmap(animationFrames[currentFrame], matrix, null);
 
         return true;
     }

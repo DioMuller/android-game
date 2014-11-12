@@ -12,7 +12,7 @@ import com.diogomuller.gamelib.node.PhysicsNode;
  */
 public class GameView extends SceneView {
     public GameView(Context context){
-        super(context);
+        super(context, 320.0f);
 
         this.showFps = true;
 

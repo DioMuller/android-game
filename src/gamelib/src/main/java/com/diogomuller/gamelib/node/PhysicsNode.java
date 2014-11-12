@@ -10,6 +10,6 @@ public class PhysicsNode extends BitmapNode {
     //endregion Attributes
 
     public PhysicsNode(String sprite, int animationCols, FrameOrientation orientation){
-        super(sprite, animationCols, orientation);
+        super(sprite, animationCols, orientation, 0.3f);
     }
 }

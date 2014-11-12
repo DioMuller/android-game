@@ -35,7 +35,7 @@ public class GameActivity extends Activity {
         );
 
         if( screen == null ) {
-            screen = new SceneView(this);
+            screen = new SceneView(this, 320.0f);
         }
 
         setContentView(screen);
