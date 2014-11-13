@@ -19,8 +19,8 @@ public class GameView extends SceneView {
 
         this.showFps = true;
 
-        physics.setGravity(new Vector2(0, 10));
-        physics.setPixelsPerMeter(16);
+        physics.setGravity(new Vector2(0, 5));
+        physics.setPixelsPerMeter(4);
 
         PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero.png", 2, BitmapNode.FrameOrientation.VERTICAL, 0.3f);
         testHero.setPosition(new Vector2(100, 100));

@@ -30,7 +30,7 @@ public class PhysicsNode extends BitmapNode {
         }
 
         momentum = momentum.add(acceleration.multiply(deltaTime));
-        Vector2 totalAcceleration = momentum.add(physics.getGravity().multiply(deltaTime));
-        position = position.add(totalAcceleration.multiply(physics.getPixelsPerMeter()));
+        momentum = momentum.add(physics.getGravity().multiply(deltaTime));
+        position = position.add(momentum.multiply(physics.getPixelsPerMeter()));
     }
 }
