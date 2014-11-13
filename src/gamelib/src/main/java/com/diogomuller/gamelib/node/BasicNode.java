@@ -19,10 +19,10 @@ public abstract class BasicNode implements Node {
     //region Attributes
     private int id;
 
-    private Node parent;
-    private List<Node> children;
+    protected Node parent;
+    protected List<Node> children;
 
-    private boolean visible = true;
+    protected boolean visible = true;
     protected Vector2 position = new Vector2(0.0f, 0.0f);
     protected Vector2 size = new Vector2(20.0f, 20.0f);
     protected float rotation = 0.0f;

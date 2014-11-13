@@ -94,9 +94,9 @@ public class BitmapNode extends BasicNode {
         float halfHeight = (size.getY() / 2.0f) * canvasScale;
 
         Matrix matrix = new Matrix(transformations);
-        matrix.preTranslate( (position.getX() * canvasScale) - halfWidth, (position.getY() * canvasScale) - halfHeight);
-        matrix.preScale(scale.getX() * canvasScale, scale.getY() * canvasScale, halfWidth, halfHeight );
-        matrix.preRotate(rotation, halfWidth, halfHeight);
+        matrix.preTranslate( ( (parent.getPosition().getX() + position.getX()) * canvasScale) - halfWidth, ((parent.getPosition().getY() + position.getY()) * canvasScale) - halfHeight);
+        matrix.preScale((parent.getScale().getX() + scale.getX()) * canvasScale, (parent.getPosition().getY() + scale.getY()) * canvasScale, halfWidth, halfHeight );
+        matrix.preRotate(parent.getRotation() + rotation, halfWidth, halfHeight);
 
         canvas.drawBitmap(animationFrames[currentFrame], matrix, null);
 

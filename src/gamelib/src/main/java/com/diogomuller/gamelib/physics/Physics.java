@@ -10,7 +10,7 @@ public class Physics {
     //region Singleton
     private static final Physics instance = new Physics();
 
-    public Physics getInstance() {
+    public static Physics getInstance() {
         return instance;
     }
     //endregion Singleton
