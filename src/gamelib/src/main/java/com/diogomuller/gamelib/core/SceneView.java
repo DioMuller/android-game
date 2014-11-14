@@ -140,7 +140,12 @@ public class SceneView extends SurfaceView implements Runnable, Node {
 
     @Override
     public Vector2 getPosition() {
-        return new Vector2(0,0);
+        return Vector2.Zero();
+    }
+
+    @Override
+    public Vector2 getAbsolutePosition() {
+        return Vector2.Zero();
     }
 
     @Override

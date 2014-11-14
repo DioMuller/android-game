@@ -30,6 +30,12 @@ public interface Node {
      * @return Current Node Position.
      */
     public Vector2 getPosition();
+
+    /**
+     * Gets the nodes absolute position on the canvas.
+     * @return Node absolute position on canvas.
+     */
+    public Vector2 getAbsolutePosition();
     //endregion Position
 
     //region Size

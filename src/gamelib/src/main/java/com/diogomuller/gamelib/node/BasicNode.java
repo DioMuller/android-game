@@ -77,6 +77,18 @@ public abstract class BasicNode implements Node {
     public Vector2 getPosition() {
         return position;
     }
+
+    /**
+     * Gets the nodes absolute position on the canvas.
+     * @return Node absolute position on canvas.
+     */
+    public Vector2 getAbsolutePosition(){
+        if( parent != null ){
+            return Vector2.add(position, parent.getAbsolutePosition());
+        } else {
+            return position;
+        }
+    }
     //endregion Position
 
     //region Size
