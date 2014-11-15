@@ -41,7 +41,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     Paint paint = new Paint();
     SurfaceHolder holder;
     boolean running = false;
-    protected final Vector2 canvasSize;
+    protected Vector2 canvasSize;
     protected float canvasScale;
 
     private List<Node> children;
@@ -148,14 +148,22 @@ public class SceneView extends SurfaceView implements Runnable, Node {
         return Vector2.Zero();
     }
 
+    /**
+     * Sets canvas Size, by height. Width will always be calculated.
+     * @param size New size.
+     */
     @Override
     public void setSize(Vector2 size) {
-        // Nothing else to do.
+        float desiredHeight = size.getY();
+        DisplayMetrics display = getResources().getDisplayMetrics();
+        canvasScale = display.heightPixels / desiredHeight;
+
+        canvasSize = new Vector2(display.widthPixels / canvasScale, display.heightPixels / canvasScale);
     }
 
     @Override
     public Vector2 getSize() {
-        return new Vector2(0,0);
+        return canvasSize;
     }
 
     @Override
