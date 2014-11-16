@@ -2,6 +2,7 @@ package com.diogomuller.gamelib.node;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 
 import com.diogomuller.gamelib.math.Vector2;
 
@@ -82,6 +83,11 @@ public interface Node {
     //endregion Scale
 
     //region Id
+
+    /**
+     * Gets node Id.
+     * @return Node id.
+     */
     public int getId();
     //endregion Id
 
@@ -102,10 +108,106 @@ public interface Node {
     //endregion Getters and Setters
 
     //region Node Methods
+
+    /**
+     * Adds child to node.
+     * @param node New Child.
+     */
     public void addChild(Node node);
 
+    /**
+     * Removes Child from node.
+     * @param node Children to remove.
+     */
     public void removeChild(Node node);
 
+    /**
+     * Sets node parent.
+     * @param parent New Parent.
+     */
     public void setParent(Node parent);
     //endregion Node Methods
+
+    //region Collision Methods
+
+    //region Category Mask
+    /**
+     * Sets the node category mask.
+     * @param mask New collision category mask.
+     */
+    public void setCategoryMask(int mask);
+    /**
+     * Gets the node category mask.
+     * @return Collision category mask.
+     */
+    public int getCategoryMask();
+    //endregion Category Mask
+
+    //region Collision Mask
+
+    /**
+     * Sets the node collision mask. This will make the node collide only with nodes of this category.
+     * @param mask New Collision mask.
+     */
+    public void setCollisionMask(int mask);
+
+    /**
+     * Gets the node collision mask. This will make the node collide only with nodes of this category.
+     * @return Node Collision Mask.
+     */
+    public int getCollisionMask();
+    //endregion Collision Mask
+
+    //region Contact Mask
+    /**
+     * Sets the node contact mask. If a node with an id on the contact mask intersects with this, the onContact event will be fired.
+     * @param mask New contact mask.
+     */
+    public void setContactMask(int mask);
+
+    /**
+     * Gets the node contact mask. If a node with an id on the contact mask intersects with this, the onContact event will be fired.
+     * @return Node contact mask.
+     */
+    public int getContactMask();
+    //endregion Contact Mask
+
+    //region Collision Rect
+    /**
+     * Obtains the node collision rectangle.
+     * @return Node collision rectangle.
+     */
+    public Rect getCollisionRectange();
+    //endregion Collision Rect
+
+    //region Events
+
+    /**
+     * Event Called on Collision. Should be used only if the node works differently on collision.
+     * @param other Other body.
+      */
+    public void onCollision(Node other);
+
+    /**
+     * Event called on contact. Will be called when there is contact, but no collision.
+     * @param other Other body.
+     */
+    public void onContact(Node other);
+
+    /**
+     * Checks if there is contact with other node.
+     * @param node Other node.
+     * @return Is there contact with other nodes?
+     */
+    public boolean checkContact(Node node);
+
+    /**
+     * Checks if there is collision with other node.
+     * @param node Other node.
+     * @return Is there collision with other nodes?
+     */
+    public boolean checkCollision(Node node);
+    //endregion Events
+
+    //endregion Collision Methods
 }

@@ -2,6 +2,7 @@ package com.diogomuller.gamelib.node;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 
 import com.diogomuller.gamelib.core.GameActivity;
 import com.diogomuller.gamelib.math.Vector2;
@@ -24,9 +25,15 @@ public abstract class BasicNode implements Node {
 
     protected boolean visible = true;
     protected Vector2 position = new Vector2(0.0f, 0.0f);
+    protected Vector2 lastPosition = new Vector2();
     protected Vector2 size = new Vector2(20.0f, 20.0f);
     protected float rotation = 0.0f;
     protected Vector2 scale = new Vector2(1.0f, 1.0f);
+    protected Rect collisionRect = new Rect();
+
+    private int categoryMask = 0;
+    private int collisionMask = 0;
+    private int contactMask = 0;
     //endregion Attributes
 
     //region Constructor
@@ -40,6 +47,16 @@ public abstract class BasicNode implements Node {
     //region Game Cycle Methods
     @Override
     public void update(float deltaTime) {
+        this.lastPosition = position;
+
+        Vector2 halfSize = new Vector2((this.size.getX() * scale.getX()) / 2.0f, (this.size.getY() * scale.getY()) / 2.0f);
+        Vector2 absPosition = this.getAbsolutePosition();
+
+        collisionRect.set((int) (absPosition.getX() - halfSize.getX()),
+                (int) (absPosition.getY() - halfSize.getY()),
+                (int) (absPosition.getX() + halfSize.getX()),
+                (int) (absPosition.getY() + halfSize.getY()));
+
         for(Node child : children) {
             child.update(deltaTime);
         }
@@ -193,4 +210,99 @@ public abstract class BasicNode implements Node {
         if(parent != null) parent.addChild(this);
     }
     //endregion Node Methods
+
+    //region Collision
+    @Override
+    public void setCategoryMask(int mask) {
+        this.categoryMask = mask;
+    }
+
+    @Override
+    public int getCategoryMask() {
+        return this.categoryMask;
+    }
+
+    @Override
+    public void setCollisionMask(int mask) {
+        this.collisionMask = mask;
+    }
+
+    @Override
+    public int getCollisionMask() {
+        return this.collisionMask;
+    }
+
+    @Override
+    public void setContactMask(int mask) {
+        this.contactMask = mask;
+    }
+
+    @Override
+    public int getContactMask() {
+        return this.contactMask;
+    }
+
+    @Override
+    public Rect getCollisionRectange() {
+        return collisionRect;
+    }
+
+    @Override
+    public void onCollision(Node other) {
+        if( (other.getCategoryMask() & this.getCollisionMask()) != 0) {
+            this.position = lastPosition;
+        }
+    }
+
+    @Override
+    public void onContact(Node other) {
+        // Nothing Else to Do.
+    }
+
+    /**
+     * Checks if there is contact with other node.
+     * @param node Other node.
+     * @return Is there contact with other nodes?
+     */
+    @Override
+    public boolean checkContact(Node node){
+        if( (node.getCategoryMask() & this.getContactMask()) != 0 ) {
+            if (this.getCollisionRectange().intersect(node.getCollisionRectange())) {
+                onContact(node);
+                node.onContact(this);
+                return true;
+            }
+        }
+
+        boolean result = false;
+        for(Node child : children) {
+            result = result || node.checkContact(child);
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks if there is collision with other node.
+     * @param node Other node.
+     * @return Is there collision with other nodes?
+     */
+    @Override
+    public boolean checkCollision(Node node){
+        if( (node.getCategoryMask() & this.getCollisionMask()) != 0 ) {
+            if (this.getCollisionRectange().intersect(node.getCollisionRectange())) {
+                onCollision(node);
+                node.onCollision(this);
+                return true;
+            }
+        }
+
+        boolean result = false;
+        for(Node child : children) {
+            result = result || node.checkCollision(child);
+        }
+
+        return result;
+    }
+    //endregion Collision
 }
