@@ -4,7 +4,9 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.transition.Scene;
 import android.util.Log;
 
@@ -29,6 +31,7 @@ public class BitmapNode extends BasicNode {
     protected int currentFrame = 0;
     //endregion Attributes
 
+    //region Constructors
     public BitmapNode(String sprite, int animationCols, FrameOrientation orientation, float msPerFrame) {
         super();
 
@@ -64,10 +67,25 @@ public class BitmapNode extends BasicNode {
             } catch( IOException ioex ) {
                 Log.e("BitmapNode Id = " + getId(), ioex.getMessage() );
             }
-
-
         }
     }
+
+    public BitmapNode(int color, float width, float height) {
+        super();
+
+        this.imagePath = null;
+        this.animationCols = 1;
+        this.animationFrames = new Bitmap[1];
+        this.msPerFrame = 0.0f;
+
+        this.animationFrames[0] = Bitmap.createBitmap((int) width, (int) height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(this.animationFrames[0]);
+
+        canvas.drawColor(color);
+
+        this.size = new Vector2(width, height);
+    }
+    //endregion Constructors
 
     //region Game Cycle Methods
     @Override

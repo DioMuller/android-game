@@ -18,6 +18,10 @@ public class PhysicsNode extends BitmapNode {
         super(sprite, animationCols, orientation, milisecondsPerFrame);
     }
 
+    public PhysicsNode(int color, float width, float height) {
+        super(color, width, height);
+    }
+
     @Override
     public void update(float deltaTime) {
         updatePhysics(deltaTime);
