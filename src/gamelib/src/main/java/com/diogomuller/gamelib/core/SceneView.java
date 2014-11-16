@@ -117,8 +117,18 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     @Override
     public void update(float deltaTime) {
         if( showFps ) fps.update(deltaTime);
-        for(Node child : children) {
+
+        for(int i = 0; i < children.size(); i++) {
+            Node child = children.get(i);
             child.update(deltaTime);
+
+            if( child.getCategoryMask() != 0 ) {
+                for(int j = i + 1; j < children.size(); j++) {
+                    Node other = children.get(j);
+                    child.checkCollision(other);
+                    child.checkContact(other);
+                }
+            }
         }
     }
 

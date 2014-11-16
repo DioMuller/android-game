@@ -21,6 +21,14 @@ import java.io.InputStream;
  * Created by Diogo on 21/10/2014.
  */
 public class BitmapNode extends BasicNode {
+
+    //region Enum
+    public enum FrameOrientation {
+        HORIZONTAL,
+        VERTICAL
+    }
+    //endregion Enum
+
     //region Attributes
     protected String imagePath;
     protected int animationCols;
@@ -122,8 +130,9 @@ public class BitmapNode extends BasicNode {
     }
     //endregion Game Cycle Methods
 
-    public enum FrameOrientation {
-        HORIZONTAL,
-        VERTICAL
+
+    @Override
+    public void onContact(Node other) {
+        this.visible = false;
     }
 }

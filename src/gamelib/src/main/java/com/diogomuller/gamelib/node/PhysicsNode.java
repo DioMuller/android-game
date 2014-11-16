@@ -24,8 +24,10 @@ public class PhysicsNode extends BitmapNode {
 
     @Override
     public void update(float deltaTime) {
+        Vector2 current = this.position;
         updatePhysics(deltaTime);
         super.update(deltaTime);
+        lastPosition = current;
     }
 
     public void updatePhysics(float deltaTime){
@@ -36,5 +38,10 @@ public class PhysicsNode extends BitmapNode {
         momentum = momentum.add(acceleration.multiply(deltaTime));
         momentum = momentum.add(physics.getGravity().multiply(deltaTime));
         position = position.add(momentum.multiply(physics.getPixelsPerMeter()));
+    }
+
+    @Override
+    public void onContact(Node other) {
+        this.visible = true;
     }
 }

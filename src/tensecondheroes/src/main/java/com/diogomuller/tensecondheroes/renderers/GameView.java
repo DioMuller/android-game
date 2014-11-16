@@ -26,10 +26,14 @@ public class GameView extends SceneView {
 
         PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero.png", 2, BitmapNode.FrameOrientation.VERTICAL, 0.3f);
         testHero.setPosition(new Vector2(100, 100));
+        testHero.setCategoryMask(1);
+        testHero.setCollisionMask(2);
         this.addChild(testHero);
 
         BitmapNode testGround = new BitmapNode(Color.argb(255, 0, 255, 128), getSize().getX(), 60);
         testGround.setPosition(new Vector2(getSize().getX() / 2 , HEIGHT - 30));
+        testGround.setCategoryMask(2);
+        testGround.setCollisionMask(1);
         this.addChild(testGround);
     }
 }
