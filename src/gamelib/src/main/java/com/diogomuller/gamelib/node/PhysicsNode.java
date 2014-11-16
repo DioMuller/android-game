@@ -39,9 +39,4 @@ public class PhysicsNode extends BitmapNode {
         momentum = momentum.add(physics.getGravity().multiply(deltaTime));
         position = position.add(momentum.multiply(physics.getPixelsPerMeter()));
     }
-
-    @Override
-    public void onContact(Node other) {
-        this.visible = true;
-    }
 }

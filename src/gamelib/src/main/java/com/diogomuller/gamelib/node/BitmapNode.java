@@ -129,10 +129,4 @@ public class BitmapNode extends BasicNode {
         return true;
     }
     //endregion Game Cycle Methods
-
-
-    @Override
-    public void onContact(Node other) {
-        this.visible = false;
-    }
 }

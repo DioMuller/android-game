@@ -9,6 +9,7 @@ import com.diogomuller.gamelib.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Node class - Base game Entity.
@@ -22,6 +23,8 @@ public abstract class BasicNode implements Node {
 
     protected Node parent;
     protected List<Node> children;
+    protected Stack<Node> toRemove = new Stack<Node>();
+    protected Stack<Node> toAdd = new Stack<Node>();
 
     protected boolean visible = true;
     protected Vector2 position = new Vector2(0.0f, 0.0f);
@@ -56,6 +59,14 @@ public abstract class BasicNode implements Node {
                 (int) (absPosition.getY() - halfSize.getY()),
                 (int) (absPosition.getX() + halfSize.getX()),
                 (int) (absPosition.getY() + halfSize.getY()));
+
+        while(!toRemove.isEmpty()) {
+            children.remove(toRemove.pop());
+        }
+
+        while(!toAdd.isEmpty()) {
+            children.add(toAdd.pop());
+        }
 
         for(Node child : children) {
             child.update(deltaTime);
@@ -194,12 +205,12 @@ public abstract class BasicNode implements Node {
     //region Node Methods
     @Override
     public void addChild(Node node){
-        if(!children.contains(node)) children.add(node);
+        if(!children.contains(node) && !toAdd.contains(node)) toAdd.add(node);
     }
 
     @Override
     public void removeChild(Node node){
-        children.remove(node);
+        toRemove.add(node);
         node.setParent(null);
     }
 

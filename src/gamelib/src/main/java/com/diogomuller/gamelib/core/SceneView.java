@@ -19,6 +19,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * Created by Diogo on 04/10/2014.
@@ -44,6 +45,8 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     boolean running = false;
     protected Vector2 canvasSize;
     protected float canvasScale;
+    protected Stack<Node> toRemove = new Stack<Node>();
+    protected Stack<Node> toAdd = new Stack<Node>();
 
     private List<Node> children;
     //endregion Attributes
@@ -102,6 +105,14 @@ public class SceneView extends SurfaceView implements Runnable, Node {
 
             Canvas canvas = holder.lockCanvas();
             canvas.drawRGB(0, 0, 0);
+
+            while(!toRemove.isEmpty()) {
+                children.remove(toRemove.pop());
+            }
+
+            while(!toAdd.isEmpty()) {
+                children.add(toAdd.pop());
+            }
 
             this.update(deltaTime);
             this.draw(canvas, matrix);
@@ -224,15 +235,15 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     //region Node Methods
     @Override
     public void addChild(Node node) {
-        if(children.contains(node)) return;
+        if(children.contains(node) || toAdd.contains(node)) return;
 
-        children.add(node);
+        toAdd.add(node);
         node.setParent(this);
     }
 
     @Override
     public void removeChild(Node node) {
-        children.remove(node);
+        toRemove.push(node);
     }
 
     @Override
