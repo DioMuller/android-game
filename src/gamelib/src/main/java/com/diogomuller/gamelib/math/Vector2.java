@@ -287,5 +287,13 @@ public class Vector2 implements Cloneable {
 
         return Vector2.equals(this, other);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder = builder.append("[ ").append(x).append(" , ").append(y).append(" ]");
+        return builder.toString();
+    }
+
     //endregion Helper
 }

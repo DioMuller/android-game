@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -365,4 +366,24 @@ public class SceneView extends SurfaceView implements Runnable, Node {
         return false;
     }
     //endregion Collision
+
+    //region Touch
+    public void onTouchEntered(List<Vector2> points){
+        for( Vector2 point : points ) {
+            Log.d("Touch - Enter", point.toString());
+        }
+    }
+
+    public void onTouchMoved(List<Vector2> points){
+        for( Vector2 point : points ) {
+            Log.d("Touch - Moved", point.toString());
+        }
+    }
+
+    public void onTouchExit(List<Vector2> points){
+        for( Vector2 point : points ) {
+            Log.d("Touch - Exit", point.toString());
+        }
+    }
+    //endregion Touch
 }
