@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -208,6 +209,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     public float getCanvasScale(){
         return canvasScale;
     }
+    //endregion Getters and Setters
 
     //region Node Methods
     @Override
@@ -229,5 +231,117 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     }
     //endregion Node Methods
 
-    //endregion Getters and Setters
+    //region Collision
+    /**
+     * Sets the node category mask.
+     *
+     * @param mask New collision category mask.
+     */
+    @Override
+    public void setCategoryMask(int mask) {
+        // Nothing Else To Do
+    }
+
+    /**
+     * Gets the node category mask.
+     *
+     * @return Collision category mask.
+     */
+    @Override
+    public int getCategoryMask() {
+        return 0;
+    }
+
+    /**
+     * Sets the node collision mask. This will make the node collide only with nodes of this category.
+     *
+     * @param mask New Collision mask.
+     */
+    @Override
+    public void setCollisionMask(int mask) {
+        // Nothing Else To Do
+    }
+
+    /**
+     * Gets the node collision mask. This will make the node collide only with nodes of this category.
+     *
+     * @return Node Collision Mask.
+     */
+    @Override
+    public int getCollisionMask() {
+        return 0;
+    }
+
+    /**
+     * Sets the node contact mask. If a node with an id on the contact mask intersects with this, the onContact event will be fired.
+     *
+     * @param mask New contact mask.
+     */
+    @Override
+    public void setContactMask(int mask) {
+        // Nothing Else To Do
+    }
+
+    /**
+     * Gets the node contact mask. If a node with an id on the contact mask intersects with this, the onContact event will be fired.
+     *
+     * @return Node contact mask.
+     */
+    @Override
+    public int getContactMask() {
+        return 0;
+    }
+
+    /**
+     * Obtains the node collision rectangle.
+     *
+     * @return Node collision rectangle.
+     */
+    @Override
+    public Rect getCollisionRectange() {
+        return null;
+    }
+
+    /**
+     * Event Called on Collision. Should be used only if the node works differently on collision.
+     *
+     * @param other Other body.
+     */
+    @Override
+    public void onCollision(Node other) {
+        // Nothing Else To Do
+    }
+
+    /**
+     * Event called on contact. Will be called when there is contact, but no collision.
+     *
+     * @param other Other body.
+     */
+    @Override
+    public void onContact(Node other) {
+        // Nothing Else To Do
+    }
+
+    /**
+     * Checks if there is contact with other node.
+     *
+     * @param node Other node.
+     * @return Is there contact with other nodes?
+     */
+    @Override
+    public boolean checkContact(Node node) {
+        return false;
+    }
+
+    /**
+     * Checks if there is collision with other node.
+     *
+     * @param node Other node.
+     * @return Is there collision with other nodes?
+     */
+    @Override
+    public boolean checkCollision(Node node) {
+        return false;
+    }
+    //endregion Collision
 }
