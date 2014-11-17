@@ -7,6 +7,8 @@ import android.media.SoundPool;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Diogo on 17/11/2014.
@@ -18,13 +20,12 @@ public class AudioController {
     //endregion Constants
 
     //region Static Attributes
-    /**
-     * Media Player, for Music.
-     */
+    /** Media Player, for Music. */
     private static MediaPlayer mediaPlayer = new MediaPlayer();
-    /** Sound Pool, for Sound Effects.
-   */
+    /** Sound Pool, for Sound Effects. */
     private static SoundPool soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);;
+    /** Sound Map */
+    private static Map<String, Integer> loadedSounds = new TreeMap<String, Integer>();
     //endregion Static Attributes
 
     //region Music Methods
@@ -60,4 +61,24 @@ public class AudioController {
             mediaPlayer.start();
     }
     //endregion Music Methods
+
+    //region Sound Methods
+    public static void playSound(String path){
+        if(!loadedSounds.containsKey(path)){
+            try {
+                AssetFileDescriptor descriptor = Assets.getAssetManager().openFd(path);
+                loadedSounds.put(path, soundPool.load(descriptor, 1));
+            } catch ( IOException ioex ) {
+                Log.e("Sound Player", "Error opening sound file", ioex);
+            }
+        }
+
+        soundPool.play(loadedSounds.get(path),
+                1, // Left Volume
+                1, // Right Volume
+                1, // Priority
+                0, // Loop
+                1.0f); // Rate
+    }
+    //endregion Sound Methods
 }

@@ -3,11 +3,14 @@ package com.diogomuller.tensecondheroes.renderers;
 import android.content.Context;
 import android.graphics.Color;
 
+import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.node.BitmapNode;
 import com.diogomuller.gamelib.node.PhysicsNode;
 import com.diogomuller.gamelib.physics.Physics;
+
+import java.util.List;
 
 /**
  * Created by Diogo on 09/11/2014.
@@ -35,5 +38,10 @@ public class GameView extends SceneView {
         testGround.setCategoryMask(2);
         testGround.setCollisionMask(1);
         this.addChild(testGround);
+    }
+
+    @Override
+    public void onTouchEntered(List<Vector2> points) {
+        AudioController.playSound("Sound/drop.wav");
     }
 }
