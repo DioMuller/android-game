@@ -205,7 +205,10 @@ public abstract class BasicNode implements Node {
     //region Node Methods
     @Override
     public void addChild(Node node){
-        if(!children.contains(node) && !toAdd.contains(node)) toAdd.add(node);
+        if(!children.contains(node) && !toAdd.contains(node)){
+            toAdd.add(node);
+            node.setParent(this);
+        }
     }
 
     @Override

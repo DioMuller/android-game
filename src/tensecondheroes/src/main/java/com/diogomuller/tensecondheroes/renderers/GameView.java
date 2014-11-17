@@ -7,6 +7,7 @@ import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.node.BitmapNode;
+import com.diogomuller.gamelib.node.ParallaxNode;
 import com.diogomuller.gamelib.node.PhysicsNode;
 import com.diogomuller.gamelib.physics.Physics;
 
@@ -38,6 +39,9 @@ public class GameView extends SceneView {
         testGround.setCategoryMask(2);
         testGround.setCollisionMask(1);
         this.addChild(testGround);
+
+        ParallaxNode background = new ParallaxNode("Images/background_morningsky.png", getSize(), 100.0f );
+        this.addChild(background);
     }
 
     @Override
