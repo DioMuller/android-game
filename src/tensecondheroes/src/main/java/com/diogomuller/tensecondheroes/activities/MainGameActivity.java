@@ -2,6 +2,7 @@ package com.diogomuller.tensecondheroes.activities;
 
 import android.os.Bundle;
 
+import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.GameActivity;
 import com.diogomuller.tensecondheroes.renderers.GameView;
 
@@ -16,6 +17,7 @@ public class MainGameActivity extends GameActivity {
     @Override
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
+        AudioController.playMusic("Music/Save Me.ogg");
         loadScene(new GameView(this));
     }
 }

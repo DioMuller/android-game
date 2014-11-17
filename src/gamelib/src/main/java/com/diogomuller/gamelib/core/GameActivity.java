@@ -1,6 +1,7 @@
 package com.diogomuller.gamelib.core;
 
 import android.app.Activity;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ public class GameActivity extends Activity implements OnTouchListener {
         super.onCreate(savedInstance);
 
         Assets.setAssetManager(this.getAssets());
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
@@ -57,12 +59,14 @@ public class GameActivity extends Activity implements OnTouchListener {
     protected void onResume(){
         super.onResume();
         screen.resume();
+        AudioController.resumeMusic();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         screen.pause();
+        AudioController.pauseMusic();
     }
 
     public void loadScene(SceneView scene){

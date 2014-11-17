@@ -369,21 +369,15 @@ public class SceneView extends SurfaceView implements Runnable, Node {
 
     //region Touch
     public void onTouchEntered(List<Vector2> points){
-        for( Vector2 point : points ) {
-            Log.d("Touch - Enter", point.toString());
-        }
+        // Nothing Else to Do
     }
 
     public void onTouchMoved(List<Vector2> points){
-        for( Vector2 point : points ) {
-            Log.d("Touch - Moved", point.toString());
-        }
+        // Nothing Else to Do
     }
 
     public void onTouchExit(List<Vector2> points){
-        for( Vector2 point : points ) {
-            Log.d("Touch - Exit", point.toString());
-        }
+        // Nothing Else to Do
     }
     //endregion Touch
 }
