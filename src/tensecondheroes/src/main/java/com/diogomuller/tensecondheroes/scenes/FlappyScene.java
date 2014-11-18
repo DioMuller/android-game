@@ -17,16 +17,18 @@ public class FlappyScene extends BasicNode {
     public FlappyScene(Vector2 size) {
         super();
 
+        setCategoryMask(1);
+
         PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero.png", 2, BitmapNode.FrameOrientation.VERTICAL, 0.3f);
         testHero.setPosition(new Vector2(100, 100));
-        testHero.setCategoryMask(1);
-        testHero.setCollisionMask(2);
+        testHero.setCategoryMask(2);
+        testHero.setCollisionMask(4);
         this.addChild(testHero);
 
         BitmapNode testGround = new BitmapNode(Color.argb(255, 0, 255, 128), size.getX(), 60);
         testGround.setPosition(new Vector2(size.getX() / 2 , size.getY() - 30));
-        testGround.setCategoryMask(2);
-        testGround.setCollisionMask(1);
+        testGround.setCategoryMask(4);
+        testGround.setCollisionMask(2);
         this.addChild(testGround);
 
         ParallaxNode background = new ParallaxNode("Images/background_morningsky.png", size, 100.0f );
