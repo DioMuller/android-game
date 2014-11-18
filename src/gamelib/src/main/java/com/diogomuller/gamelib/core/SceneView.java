@@ -2,21 +2,16 @@ package com.diogomuller.gamelib.core;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.WindowManager;
 
 import com.diogomuller.gamelib.math.Vector2;
-import com.diogomuller.gamelib.node.Node;
+import com.diogomuller.gamelib.entities.Entity;
 
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +20,7 @@ import java.util.Stack;
 /**
  * Created by Diogo on 04/10/2014.
  */
-public class SceneView extends SurfaceView implements Runnable, Node {
+public class SceneView extends SurfaceView implements Runnable, Entity {
 
     //region Singleton
     private static SceneView instance = null;
@@ -46,10 +41,10 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     boolean running = false;
     protected Vector2 canvasSize;
     protected float canvasScale;
-    protected Stack<Node> toRemove = new Stack<Node>();
-    protected Stack<Node> toAdd = new Stack<Node>();
+    protected Stack<Entity> toRemove = new Stack<Entity>();
+    protected Stack<Entity> toAdd = new Stack<Entity>();
 
-    protected List<Node> children;
+    protected List<Entity> children;
     //endregion Attributes
 
     //region Constructor
@@ -62,7 +57,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
         holder = this.getHolder();
         paint.setStrokeWidth(1.0f);
 
-        children = new ArrayList<Node>();
+        children = new ArrayList<Entity>();
 
         startTime = System.nanoTime();
         elapsedTime = 0;
@@ -131,12 +126,12 @@ public class SceneView extends SurfaceView implements Runnable, Node {
         if( showFps ) fps.update(deltaTime);
 
         for(int i = 0; i < children.size(); i++) {
-            Node child = children.get(i);
+            Entity child = children.get(i);
             child.update(deltaTime);
 
             if( child.getCategoryMask() != 0 ) {
                 for(int j = i + 1; j < children.size(); j++) {
-                    Node other = children.get(j);
+                    Entity other = children.get(j);
                     child.checkCollision(other);
                     child.checkContact(other);
                 }
@@ -147,7 +142,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     @Override
     public boolean draw(Canvas canvas, Matrix matrix){
         if( showFps ) fps.draw(canvas);
-        for(Node child : children) {
+        for(Entity child : children) {
             child.draw(canvas, matrix);
         }
 
@@ -163,11 +158,6 @@ public class SceneView extends SurfaceView implements Runnable, Node {
 
     @Override
     public Vector2 getPosition() {
-        return Vector2.Zero();
-    }
-
-    @Override
-    public Vector2 getAbsolutePosition() {
         return Vector2.Zero();
     }
 
@@ -233,25 +223,17 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     }
     //endregion Getters and Setters
 
-    //region Node Methods
-    @Override
-    public void addChild(Node node) {
-        if(children.contains(node) || toAdd.contains(node)) return;
+    //region Scene Methods
+    public void addChild(Entity entity) {
+        if(children.contains(entity) || toAdd.contains(entity)) return;
 
-        toAdd.add(node);
-        node.setParent(this);
+        toAdd.add(entity);
     }
 
-    @Override
-    public void removeChild(Node node) {
-        toRemove.push(node);
+    public void removeChild(Entity entity) {
+        toRemove.push(entity);
     }
-
-    @Override
-    public void setParent(Node parent) {
-        // Nothing else to do.
-    }
-    //endregion Node Methods
+    //endregion Scene Methods
 
     //region Collision
     /**
@@ -330,7 +312,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
      * @param other Other body.
      */
     @Override
-    public void onCollision(Node other) {
+    public void onCollision(Entity other) {
         // Nothing Else To Do
     }
 
@@ -340,29 +322,29 @@ public class SceneView extends SurfaceView implements Runnable, Node {
      * @param other Other body.
      */
     @Override
-    public void onContact(Node other) {
+    public void onContact(Entity other) {
         // Nothing Else To Do
     }
 
     /**
      * Checks if there is contact with other node.
      *
-     * @param node Other node.
+     * @param entity Other node.
      * @return Is there contact with other nodes?
      */
     @Override
-    public boolean checkContact(Node node) {
+    public boolean checkContact(Entity entity) {
         return false;
     }
 
     /**
      * Checks if there is collision with other node.
      *
-     * @param node Other node.
+     * @param entity Other node.
      * @return Is there collision with other nodes?
      */
     @Override
-    public boolean checkCollision(Node node) {
+    public boolean checkCollision(Entity entity) {
         return false;
     }
     //endregion Collision
