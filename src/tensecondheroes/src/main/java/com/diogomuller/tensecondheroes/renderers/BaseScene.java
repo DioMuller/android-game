@@ -25,9 +25,4 @@ public class BaseScene extends SceneView {
         physics.setGravity(new Vector2(0, 5));
         physics.setPixelsPerMeter(4);
     }
-
-    @Override
-    public void onTouchEntered(List<Vector2> points) {
-        AudioController.playSound("Sound/drop.wav");
-    }
 }

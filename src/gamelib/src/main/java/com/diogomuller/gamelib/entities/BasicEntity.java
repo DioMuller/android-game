@@ -28,6 +28,7 @@ public abstract class BasicEntity implements Entity {
     protected float rotation = 0.0f;
     protected Vector2 scale = new Vector2(1.0f, 1.0f);
     protected Rect collisionRect = new Rect();
+    protected float collisionThreshold = 0.0f;
 
     private int categoryMask = 0;
     private int collisionMask = 0;
@@ -48,10 +49,10 @@ public abstract class BasicEntity implements Entity {
         Vector2 halfSize = new Vector2((this.size.getX() * scale.getX()) / 2.0f, (this.size.getY() * scale.getY()) / 2.0f);
         Vector2 absPosition = this.getPosition();
 
-        collisionRect.set((int) (absPosition.getX() - halfSize.getX()),
-                (int) (absPosition.getY() - halfSize.getY()),
-                (int) (absPosition.getX() + halfSize.getX()),
-                (int) (absPosition.getY() + halfSize.getY()));
+        collisionRect.set((int) (absPosition.getX() - halfSize.getX() + collisionThreshold),
+                (int) (absPosition.getY() - halfSize.getY() + collisionThreshold),
+                (int) (absPosition.getX() + halfSize.getX() - collisionThreshold),
+                (int) (absPosition.getY() + halfSize.getY() - collisionThreshold));
     }
 
     @Override
@@ -248,6 +249,14 @@ public abstract class BasicEntity implements Entity {
         }
 
         return false;
+    }
+
+    public float getCollisionThreshold(){
+        return collisionThreshold;
+    }
+
+    public void setCollisionThreshold(float threshold){
+        collisionThreshold = threshold;
     }
     //endregion Collision
 }

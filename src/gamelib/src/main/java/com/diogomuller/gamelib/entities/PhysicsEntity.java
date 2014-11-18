@@ -11,7 +11,7 @@ public class PhysicsEntity extends BitmapEntity {
     //region Attributes
     protected Physics physics = null;
     protected Vector2 momentum = Vector2.Zero();
-    protected Vector2 acceleration = Vector2.Zero();
+    protected boolean collided = false;
     //endregion Attributes
 
     public PhysicsEntity(String sprite, int animationCols, FrameOrientation orientation, float milisecondsPerFrame){
@@ -31,12 +31,22 @@ public class PhysicsEntity extends BitmapEntity {
     }
 
     public void updatePhysics(float deltaTime){
+        if( collided ) return;
         if( physics == null ){
             physics = Physics.getInstance();
         }
 
-        momentum = momentum.add(acceleration.multiply(deltaTime));
         momentum = momentum.add(physics.getGravity().multiply(deltaTime));
         position = position.add(momentum.multiply(physics.getPixelsPerMeter()));
+    }
+
+    @Override
+    public void onCollision(Entity other) {
+        super.onCollision(other);
+        this.collided = true;
+    }
+
+    public void applyForce(Vector2 force){
+        this.momentum = Vector2.Zero();
     }
 }
