@@ -141,10 +141,16 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
 
     @Override
     public boolean draw(Canvas canvas, Matrix matrix){
+        final int savedState = canvas.save();
+
+        canvas.scale(canvasScale, canvasScale);
+
         if( showFps ) fps.draw(canvas);
         for(Entity child : children) {
             child.draw(canvas, matrix);
         }
+
+        canvas.restoreToCount(savedState);
 
         return true;
     }
@@ -212,14 +218,6 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
     @Override
     public boolean getVisible() {
         return true;
-    }
-
-    public Vector2 getCanvasSize(){
-        return canvasSize;
-    }
-
-    public float getCanvasScale(){
-        return canvasScale;
     }
     //endregion Getters and Setters
 
