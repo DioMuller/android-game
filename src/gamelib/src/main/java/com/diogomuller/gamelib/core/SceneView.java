@@ -49,7 +49,7 @@ public class SceneView extends SurfaceView implements Runnable, Node {
     protected Stack<Node> toRemove = new Stack<Node>();
     protected Stack<Node> toAdd = new Stack<Node>();
 
-    private List<Node> children;
+    protected List<Node> children;
     //endregion Attributes
 
     //region Constructor

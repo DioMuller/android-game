@@ -7,9 +7,11 @@ import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.node.BitmapNode;
+import com.diogomuller.gamelib.node.Node;
 import com.diogomuller.gamelib.node.ParallaxNode;
 import com.diogomuller.gamelib.node.PhysicsNode;
 import com.diogomuller.gamelib.physics.Physics;
+import com.diogomuller.tensecondheroes.scenes.FlappyScene;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class GameView extends SceneView {
     private Physics physics = Physics.getInstance();
     private static final float HEIGHT = 640.0f;
+    private Node currentScene = null;
 
     public GameView(Context context){
         super(context, HEIGHT);
@@ -28,24 +31,16 @@ public class GameView extends SceneView {
         physics.setGravity(new Vector2(0, 5));
         physics.setPixelsPerMeter(4);
 
-        PhysicsNode testHero = new PhysicsNode("Sprites/flyinghero.png", 2, BitmapNode.FrameOrientation.VERTICAL, 0.3f);
-        testHero.setPosition(new Vector2(100, 100));
-        testHero.setCategoryMask(1);
-        testHero.setCollisionMask(2);
-        this.addChild(testHero);
-
-        BitmapNode testGround = new BitmapNode(Color.argb(255, 0, 255, 128), getSize().getX(), 60);
-        testGround.setPosition(new Vector2(getSize().getX() / 2 , HEIGHT - 30));
-        testGround.setCategoryMask(2);
-        testGround.setCollisionMask(1);
-        this.addChild(testGround);
-
-        ParallaxNode background = new ParallaxNode("Images/background_morningsky.png", getSize(), 100.0f );
-        this.addChild(background);
+        loadScene(new FlappyScene(this.getSize()));
     }
 
     @Override
     public void onTouchEntered(List<Vector2> points) {
         AudioController.playSound("Sound/drop.wav");
+    }
+
+    public void loadScene(Node scene){
+        children.clear();
+        addChild(scene);
     }
 }
