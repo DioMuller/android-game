@@ -1,4 +1,4 @@
-package com.diogomuller.tensecondheroes.renderers;
+package com.diogomuller.tensecondheroes.base;
 
 import android.content.Context;
 

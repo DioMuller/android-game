@@ -1,4 +1,4 @@
-package com.diogomuller.tensecondheroes.entities;
+package com.diogomuller.tensecondheroes.entities.running;
 
 /**
  * Created by Diogo on 16/11/2014.

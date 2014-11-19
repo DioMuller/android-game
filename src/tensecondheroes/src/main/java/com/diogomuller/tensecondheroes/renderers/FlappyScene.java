@@ -8,6 +8,7 @@ import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.entities.BitmapEntity;
 import com.diogomuller.gamelib.entities.ParallaxEntity;
 import com.diogomuller.gamelib.entities.PhysicsEntity;
+import com.diogomuller.tensecondheroes.base.BaseScene;
 
 import java.util.List;
 

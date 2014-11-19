@@ -125,15 +125,16 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
     public void update(float deltaTime) {
         if( showFps ) fps.update(deltaTime);
 
-        for(int i = 0; i < children.size(); i++) {
-            Entity child = children.get(i);
+        //for(int i = 0; i < children.size(); i++) {
+            //Entity child = children.get(i);
+        for( Entity child : children){
             child.update(deltaTime);
 
             if( child.getCategoryMask() != 0 ) {
-                for(int j = i + 1; j < children.size(); j++) {
+                for(int j = children.indexOf(child) + 1; j < children.size(); j++) {
                     Entity other = children.get(j);
-                    child.checkCollision(other);
-                    child.checkContact(other);
+                    if( (child.getCollisionMask() & other.getCategoryMask()) != 0) child.checkCollision(other);
+                    if( (child.getContactMask() & other.getCategoryMask()) != 0)child.checkContact(other);
                 }
             }
         }

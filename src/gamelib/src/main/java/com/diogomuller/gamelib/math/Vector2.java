@@ -59,7 +59,6 @@ public class Vector2 implements Cloneable {
     //endregion Static Vectors
 
     //region Static Operations
-
     /**
      * Adds two vectors.
      * @param v1 Vector 1.
@@ -118,6 +117,26 @@ public class Vector2 implements Cloneable {
      */
     public static float dot(Vector2 v1, Vector2 v2){
         return v1.x * v2.x + v1.y * v2.y;
+    }
+
+    /**
+     * Squared distance between two vectors.
+     * @param v1 Vector 1.
+     * @param v2 Vector 2.
+     * @return Square Distance between v1 and v2.
+     */
+    public static float squareDistance(Vector2 v1, Vector2 v2){
+        return ((v1.getX() - v2.getX()) * (v1.getX() - v2.getX())) + ((v1.getY() - v2.getY()) * (v1.getY() - v2.getY()));
+    }
+
+    /**
+     * Euclydean distance between two vectors.
+     * @param v1 Vector 1.
+     * @param v2 Vector 2.
+     * @return Euclydean Distance between v1 and v2.
+     */
+    public static float distance(Vector2 v1, Vector2 v2){
+        return (float) Math.sqrt(squareDistance(v1, v2));
     }
     //endregion Static Operations
 
@@ -181,7 +200,6 @@ public class Vector2 implements Cloneable {
     //endregion Constructors
 
     //region Vector Properties
-
     /**
      * Calculates vector square size.
      * @return Vector square size.
@@ -208,7 +226,6 @@ public class Vector2 implements Cloneable {
     //endregion Vector Properties
 
     //region Vector Operations
-
     /**
      * Addition operation.
      * @param other Vector to be added to this.
@@ -260,6 +277,24 @@ public class Vector2 implements Cloneable {
      */
     public Vector2 normalize(){
         return Vector2.divide(this, getSize());
+    }
+
+    /**
+     * Square distance between this and another Vector.
+     * @param other Other vector.
+     * @return Square distance between this and the other vector.
+     */
+    public float squareDistance(Vector2 other){
+        return Vector2.squareDistance(this, other);
+    }
+
+    /**
+     * Euclydean distance between this and another Vector.
+     * @param other Other vector.
+     * @return Euclydean distance between this and the other vector.
+     */
+    public float distance(Vector2 other){
+        return Vector2.distance(this, other);
     }
     //endregion Vector Operations
 
