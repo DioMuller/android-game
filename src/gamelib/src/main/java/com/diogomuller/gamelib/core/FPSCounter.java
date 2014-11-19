@@ -13,7 +13,7 @@ public class FPSCounter {
     final float fps = 0.5f;
 
     public FPSCounter() {
-        paint.setTextSize(20);
+        paint.setTextSize(12);
         paint.setColor(Color.WHITE);
         paint.setFakeBoldText(true);
     }

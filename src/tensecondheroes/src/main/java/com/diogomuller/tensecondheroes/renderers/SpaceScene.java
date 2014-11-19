@@ -39,7 +39,7 @@ public class SpaceScene extends BaseScene {
         timeSinceLastSpawn += deltaTime;
 
         if( timeSinceLastSpawn > SPAWN_TIME ){
-            timeSinceLastSpawn -= SPAWN_TIME;
+            timeSinceLastSpawn = 0.0f;
             addEnemy();
         }
 

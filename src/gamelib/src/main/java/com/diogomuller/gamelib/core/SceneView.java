@@ -45,6 +45,8 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
     protected Stack<Entity> toAdd = new Stack<Entity>();
 
     protected List<Entity> children;
+
+    private int savedState;
     //endregion Attributes
 
     //region Constructor
@@ -111,7 +113,10 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
             }
 
             this.update(deltaTime);
+
+            this.beginDraw(canvas);
             this.draw(canvas, matrix);
+            this.endDraw(canvas);
 
             holder.unlockCanvasAndPost(canvas);
         }
@@ -139,20 +144,23 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
         }
     }
 
+    public void beginDraw(Canvas canvas){
+        savedState = canvas.save();
+        canvas.scale(canvasScale, canvasScale);
+    }
+
     @Override
     public boolean draw(Canvas canvas, Matrix matrix){
-        final int savedState = canvas.save();
-
-        canvas.scale(canvasScale, canvasScale);
-
         if( showFps ) fps.draw(canvas);
         for(Entity child : children) {
             child.draw(canvas, matrix);
         }
 
-        canvas.restoreToCount(savedState);
-
         return true;
+    }
+
+    public void endDraw(Canvas canvas){
+        canvas.restoreToCount(savedState);
     }
     //endregion Game Cycle
 
