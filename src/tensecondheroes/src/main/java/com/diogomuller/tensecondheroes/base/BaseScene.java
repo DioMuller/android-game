@@ -56,7 +56,19 @@ public class BaseScene extends SceneView {
         guiPaint.setTextSize(16);
         canvas.drawText("Score: " + parentActivity.getScore(), 15, 15, guiPaint);
         canvas.drawText("Lives: " + parentActivity.getLives(), getSize().getX() - 80, 15, guiPaint);
-        guiPaint.setTextSize(42);
-        canvas.drawText(new Integer((int) parentActivity.getRemainingTime()).toString(), getSize().getX() - 80, HEIGHT - 20, guiPaint);
+
+        int time = (int) parentActivity.getRemainingTime();
+
+        if( time < 3 ){
+            guiPaint.setColor(Color.RED);
+            guiPaint.setTextSize(72);
+        } else if( time < 5 ) {
+            guiPaint.setColor(Color.YELLOW);
+            guiPaint.setTextSize(56);
+        } else {
+            guiPaint.setColor(Color.WHITE);
+            guiPaint.setTextSize(42);
+        }
+        canvas.drawText(Integer.toString(time), getSize().getX() - 80, HEIGHT - 20, guiPaint);
     }
 }

@@ -1,0 +1,45 @@
+package com.diogomuller.tensecondheroes.game;
+
+import com.diogomuller.tensecondheroes.base.BaseScene;
+import com.diogomuller.tensecondheroes.renderers.SpaceScene;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * Created by Diogo on 19/11/2014.
+ */
+
+public class Minigames {
+    //region Static
+    private static Random rng = new Random();
+
+    public static final int SPACE = 0;
+
+    public static final int COUNT = 1;
+
+
+    public static int getRandomGame(){
+        return rng.nextInt() % COUNT;
+    }
+
+    public static MinigameInfo getInfo(int minigame){
+        switch (minigame){
+            case SPACE:
+                return new MinigameInfo("Explore Space!", "Captain Space", "Sprites/spacehero_thumb.png");
+            default:
+                return null;
+        }
+    }
+
+    public static List<MinigameInfo> getMinigames(){
+        List<MinigameInfo> result = new ArrayList<MinigameInfo>();
+        for(int i = 0; i < COUNT; i++) {
+            result.add(getInfo(i));
+        }
+
+        return result;
+    }
+    //endregion Static
+}

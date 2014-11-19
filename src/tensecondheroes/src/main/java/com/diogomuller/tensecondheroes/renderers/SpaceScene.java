@@ -91,6 +91,10 @@ public class SpaceScene extends BaseScene {
 
         AudioController.playSound("Sound/explosion.wav");
 
-        // TODO: If other is Hero, end game.
+        if( collider == hero ){
+            parentActivity.dieAndChangeLevel();
+        } else {
+            parentActivity.addScore(1);
+        }
     }
 }

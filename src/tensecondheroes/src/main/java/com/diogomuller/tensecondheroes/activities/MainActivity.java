@@ -34,17 +34,15 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        AudioController.pauseMusic();
 
-        if(isFinishing())
-            AudioController.stopMusic();
+        AudioController.stopMusic();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        AudioController.resumeMusic();
+        AudioController.playMusic("Music/Press Start.ogg");
     }
 
     public void newgameClick(View v) {

@@ -30,8 +30,12 @@ public class AudioController {
 
     //region Music Methods
     public static void playMusic(String file){
-        if( mediaPlayer.isPlaying() ){
-            stopMusic();
+        if( mediaPlayer != null ){
+            try {
+                if( mediaPlayer.isPlaying() ) stopMusic();
+            } catch( IllegalStateException ieex ) {
+                Log.d("Media Player", "Media Player has an Illegal state. Ignored.");
+            }
         }
 
         try {

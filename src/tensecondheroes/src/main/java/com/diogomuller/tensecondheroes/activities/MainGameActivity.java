@@ -1,11 +1,16 @@
 package com.diogomuller.tensecondheroes.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.GameActivity;
+import com.diogomuller.tensecondheroes.game.Minigames;
 import com.diogomuller.tensecondheroes.renderers.FlappyScene;
 import com.diogomuller.tensecondheroes.renderers.SpaceScene;
+import com.diogomuller.tensecondheroes.renderers.TransitionScene;
 
 /**
  * Created by Diogo on 06/11/2014.
@@ -14,7 +19,7 @@ public class MainGameActivity extends GameActivity {
     private final float SPLASH_TIME = 3.0f;
     private final float GAME_TIME = 10.0f;
 
-    private float timeToChange = 0.0f;
+    private float timeToChange = 10.0f;
     /** Current Player Score. */
     private int score = 0;
     /** Score after last minigame.*/
@@ -70,15 +75,56 @@ public class MainGameActivity extends GameActivity {
         }
     }
 
+    public void dieAndChangeLevel(){
+        lives--;
+
+        if( lives >= 0) {
+            goToNextLevel();
+        } else {
+            //TODO: Game Over.
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
     public void goToNextLevel(){
         isTransition = !isTransition;
 
         if(isTransition){
-            // TODO: Select next level
-            // TODO: Show transition view
+            nextLevel = Minigames.getRandomGame();
+            loadTransition();
         } else {
-            // TODO: Load minigame.
+            loadNextLevel();
         }
+    }
+
+    public void loadTransition(){
+        final Context context = this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setContentView(new TransitionScene(context, nextLevel));
+            }
+        });
+    }
+
+    public void loadNextLevel(){
+        final Context context = this;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                switch (nextLevel){
+                    case Minigames.SPACE:
+                        setContentView(new SpaceScene(context));
+                        break;
+                    default:
+                        Log.e("Level Loading", "Error: Level does not exist.");
+                        goToNextLevel();
+                        break;
+                }
+            }
+        });
 
     }
     //endregion Game Data
