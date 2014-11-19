@@ -10,7 +10,7 @@ import com.diogomuller.tensecondheroes.renderers.SpaceScene;
  * Created by Diogo on 16/11/2014.
  */
 public class SpaceHero extends BitmapEntity {
-    private final float RELOAD_TIME = 2.0f;
+    private final float RELOAD_TIME = 1.0f;
 
     private SpaceScene parentScene;
     private boolean moving = false;
@@ -18,7 +18,7 @@ public class SpaceHero extends BitmapEntity {
     private float newPosition = -1.0f;
     private float xPosition = 0.0f;
 
-    public SpaceHero(Vector2 position, SpaceScene scene){
+    public SpaceHero(SpaceScene scene, Vector2 position ){
         super("Sprites/spacehero.png", 2, FrameOrientation.VERTICAL, 0.3f);
 
         this.parentScene = scene;
@@ -60,7 +60,7 @@ public class SpaceHero extends BitmapEntity {
             shootingTime -= deltaTime;
 
             if( shootingTime <= 0.0f ){
-                parentScene.addShoot((Vector2) position.clone());
+                parentScene.addShoot(position);
                 shootingTime = RELOAD_TIME;
             }
         }
