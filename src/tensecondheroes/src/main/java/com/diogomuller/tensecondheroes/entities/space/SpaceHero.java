@@ -60,7 +60,7 @@ public class SpaceHero extends BitmapEntity {
             shootingTime -= deltaTime;
 
             if( shootingTime <= 0.0f ){
-                parentScene.addShoot(position);
+                parentScene.addShoot((Vector2) position.clone());
                 shootingTime = RELOAD_TIME;
             }
         }

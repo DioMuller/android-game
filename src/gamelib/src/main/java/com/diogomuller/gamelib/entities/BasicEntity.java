@@ -23,6 +23,7 @@ public abstract class BasicEntity implements Entity {
 
     protected boolean visible = true;
     protected Vector2 position = new Vector2(0.0f, 0.0f);
+    protected Vector2 lastPosition = new Vector2();
     protected Vector2 size = new Vector2(20.0f, 20.0f);
     protected float rotation = 0.0f;
     protected Vector2 scale = new Vector2(1.0f, 1.0f);
@@ -43,6 +44,8 @@ public abstract class BasicEntity implements Entity {
     //region Game Cycle Methods
     @Override
     public void update(float deltaTime) {
+        this.lastPosition = position;
+
         Vector2 halfSize = new Vector2((this.size.getX() * scale.getX()) / 2.0f, (this.size.getY() * scale.getY()) / 2.0f);
         Vector2 absPosition = this.getPosition();
 
@@ -203,7 +206,7 @@ public abstract class BasicEntity implements Entity {
     @Override
     public void onCollision(Entity other) {
         if( (other.getCategoryMask() & this.getCollisionMask()) != 0) {
-            //this.position = lastPosition;
+            this.position = lastPosition;
         }
     }
 

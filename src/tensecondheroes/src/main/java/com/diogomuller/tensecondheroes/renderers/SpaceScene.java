@@ -2,6 +2,7 @@ package com.diogomuller.tensecondheroes.renderers;
 
 import android.content.Context;
 
+import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.entities.ParallaxEntity;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.tensecondheroes.base.BaseScene;
@@ -54,8 +55,9 @@ public class SpaceScene extends BaseScene {
     }
 
     public void addShoot(Vector2 position){
-        SpaceShot shot = new SpaceShot(this, 100.0f, 3.0f);
+        SpaceShot shot = new SpaceShot(this, 150.0f, 4.0f);
         shot.setPosition(position);
+        AudioController.playSound("Sound/pickup.wav");
         addChild(shot);
     }
 }

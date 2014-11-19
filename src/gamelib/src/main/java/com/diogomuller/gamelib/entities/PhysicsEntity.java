@@ -27,7 +27,7 @@ public class PhysicsEntity extends BitmapEntity {
         Vector2 current = this.position;
         updatePhysics(deltaTime);
         super.update(deltaTime);
-        //lastPosition = current;
+        lastPosition = current;
     }
 
     public void updatePhysics(float deltaTime){
