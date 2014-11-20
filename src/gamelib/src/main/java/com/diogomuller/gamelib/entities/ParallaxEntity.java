@@ -20,6 +20,7 @@ public class ParallaxEntity extends BasicEntity {
         nodes = new BitmapEntity[IMAGES];
         halfSize = size.divide(2.0f);
         imageSize = size;
+        this.speed = speed;
 
         for(int i = 0; i < IMAGES; i++){
             nodes[i] = new BitmapEntity(image, 1, BitmapEntity.FrameOrientation.HORIZONTAL, 0.0f);
@@ -37,7 +38,7 @@ public class ParallaxEntity extends BasicEntity {
         super.update(deltaTime);
 
         for(Entity entity : nodes) {
-            Vector2 newPosition = entity.getPosition().add(new Vector2(deltaTime * speed, 0.0f));
+            Vector2 newPosition = entity.getPosition().subtract(new Vector2(deltaTime * speed, 0.0f));
 
             if( newPosition.getX() < -halfSize.getX()) {
                 newPosition = new Vector2(
