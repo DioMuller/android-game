@@ -16,8 +16,9 @@ public class Minigames {
     private static Random rng = new Random();
 
     public static final int SPACE = 0;
+    public static final int DRIVE = 1;
 
-    public static final int COUNT = 1;
+    public static final int COUNT = 2;
 
 
     public static int getRandomGame(){
@@ -28,6 +29,8 @@ public class Minigames {
         switch (minigame){
             case SPACE:
                 return new MinigameInfo("Explore Space!", "Captain Space", "Sprites/spacehero_thumb.png");
+            case DRIVE:
+                return new MinigameInfo("Avoid the Civilians!", "Forklift Driver", "Sprites/worker_thumb.png");
             default:
                 return null;
         }

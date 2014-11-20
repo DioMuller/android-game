@@ -8,6 +8,7 @@ import android.util.Log;
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.GameActivity;
 import com.diogomuller.tensecondheroes.game.Minigames;
+import com.diogomuller.tensecondheroes.renderers.DrivingScene;
 import com.diogomuller.tensecondheroes.renderers.FlappyScene;
 import com.diogomuller.tensecondheroes.renderers.SpaceScene;
 import com.diogomuller.tensecondheroes.renderers.TransitionScene;
@@ -38,7 +39,8 @@ public class MainGameActivity extends GameActivity {
     @Override
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
-        loadScene(new SpaceScene(this, screen));
+        //loadScene(new SpaceScene(this, screen));
+        goToNextLevel();
     }
 
     //region Game Data
@@ -104,7 +106,7 @@ public class MainGameActivity extends GameActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                loadScene(new TransitionScene(context, screen,  nextLevel));
+                loadScene(new TransitionScene(context, screen, nextLevel));
             }
         });
     }
@@ -118,6 +120,9 @@ public class MainGameActivity extends GameActivity {
                 switch (nextLevel){
                     case Minigames.SPACE:
                         loadScene(new SpaceScene(context, screen));
+                        break;
+                    case Minigames.DRIVE:
+                        loadScene(new DrivingScene(context, screen));
                         break;
                     default:
                         Log.e("Level Loading", "Error: Level does not exist.");

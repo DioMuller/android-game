@@ -11,6 +11,7 @@ import com.diogomuller.tensecondheroes.renderers.SpaceScene;
  */
 public class SpaceHero extends BitmapEntity {
     private final float RELOAD_TIME = 1.0f;
+    private final float TOUCH_THRESHOLD = 50.0f;
 
     private SpaceScene parentScene;
     private boolean moving = false;
@@ -32,11 +33,7 @@ public class SpaceHero extends BitmapEntity {
     }
 
     public void activate(boolean value){
-        moving = value;
-
-        if(moving){
-            shootingTime = 0.0f;
-        }
+        shootingTime = 0.0f;
     }
 
     public boolean isMoving(){
@@ -52,7 +49,12 @@ public class SpaceHero extends BitmapEntity {
         super.update(deltaTime);
 
         if( newPosition > 0.0f ){
-            position.setY(newPosition);
+            if( Math.abs(newPosition - position.getY()) < TOUCH_THRESHOLD ) {
+                moving = true;
+                position.setY(newPosition);
+            }
+            else moving = false;
+
             newPosition = -1.0f;
         }
 
