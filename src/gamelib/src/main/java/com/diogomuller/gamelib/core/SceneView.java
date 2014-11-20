@@ -23,8 +23,8 @@ import java.util.Stack;
 public class SceneView extends SurfaceView implements Runnable, Entity {
 
     //region Singleton
-    private static SceneView instance = null;
-    public static SceneView getCurrentScene() { return instance; }
+    //private static SceneView instance = null;
+    //public static SceneView getCurrentScene() { return instance; }
     //endregion Singleton
 
     //region Attributes
@@ -54,7 +54,7 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
         super(context);
 
         this.context = context;
-        instance = this;
+        //instance = this;
 
         holder = this.getHolder();
         paint.setStrokeWidth(1.0f);
@@ -102,6 +102,11 @@ public class SceneView extends SurfaceView implements Runnable, Entity {
             startTime = System.nanoTime();
 
             Canvas canvas = holder.lockCanvas();
+
+            if( canvas == null) {
+                continue;
+            }
+
             canvas.drawRGB(0, 0, 0);
 
             while(!toRemove.isEmpty()) {

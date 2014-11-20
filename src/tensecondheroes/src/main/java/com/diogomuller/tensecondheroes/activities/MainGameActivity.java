@@ -92,8 +92,10 @@ public class MainGameActivity extends GameActivity {
 
         if(isTransition){
             nextLevel = Minigames.getRandomGame();
+            timeToChange = SPLASH_TIME;
             loadTransition();
         } else {
+            timeToChange = GAME_TIME;
             loadNextLevel();
         }
     }
@@ -103,7 +105,7 @@ public class MainGameActivity extends GameActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setContentView(new TransitionScene(context, nextLevel));
+                loadScene(new TransitionScene(context, nextLevel));
             }
         });
     }
@@ -116,7 +118,7 @@ public class MainGameActivity extends GameActivity {
             public void run() {
                 switch (nextLevel){
                     case Minigames.SPACE:
-                        setContentView(new SpaceScene(context));
+                        loadScene(new SpaceScene(context));
                         break;
                     default:
                         Log.e("Level Loading", "Error: Level does not exist.");
