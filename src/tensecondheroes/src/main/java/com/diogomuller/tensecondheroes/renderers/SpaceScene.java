@@ -85,7 +85,7 @@ public class SpaceScene extends BaseScene {
     }
 
     public void addEnemy(){
-        SpaceEnemy enemy = new SpaceEnemy(this, new Vector2(getSize().getX(), 50.0f + rng.nextFloat() * 220.0f ), 50.0f, 10.0f);
+        SpaceEnemy enemy = new SpaceEnemy(this, new Vector2(getSize().getX(), 50.0f + rng.nextFloat() * 220.0f ), 100.0f, 10.0f);
         addChild(enemy);
     }
 
