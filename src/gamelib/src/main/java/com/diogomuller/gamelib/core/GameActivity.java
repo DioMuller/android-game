@@ -28,7 +28,7 @@ public class GameActivity extends Activity implements OnTouchListener {
 
     //region Attributes
     private boolean created = false;
-    private SceneView screen = null;
+    protected SceneView screen = null;
 
     private List<Vector2> touchPoints = new ArrayList<Vector2>();
     //endregion Attributes
@@ -69,10 +69,8 @@ public class GameActivity extends Activity implements OnTouchListener {
         AudioController.pauseMusic();
     }
 
-    public void loadScene(SceneView scene){
-        screen = scene;
-        screen.setOnTouchListener(this);
-        if(created) setContentView(screen);
+    public void loadScene(GameScene scene){
+        screen.loadScene(scene);
     }
 
     //region Static Methods
@@ -105,14 +103,14 @@ public class GameActivity extends Activity implements OnTouchListener {
         switch (action){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
-                screen.onTouchEntered(touchPoints);
+                screen.getCurrentScene().onTouchEntered(touchPoints);
                 break;
             case MotionEvent.ACTION_MOVE:
-                screen.onTouchMoved(touchPoints);
+                screen.getCurrentScene().onTouchMoved(touchPoints);
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
-                screen.onTouchExit(touchPoints);
+                screen.getCurrentScene().onTouchExit(touchPoints);
                 break;
 
             default:

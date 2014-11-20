@@ -39,7 +39,7 @@ public class MainGameActivity extends GameActivity {
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
         AudioController.playMusic("Music/Save Me.ogg");
-        loadScene(new SpaceScene(this));
+        loadScene(new SpaceScene(this, screen));
     }
 
     //region Game Data
@@ -105,7 +105,7 @@ public class MainGameActivity extends GameActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                loadScene(new TransitionScene(context, nextLevel));
+                loadScene(new TransitionScene(context, screen,  nextLevel));
             }
         });
     }
@@ -118,7 +118,7 @@ public class MainGameActivity extends GameActivity {
             public void run() {
                 switch (nextLevel){
                     case Minigames.SPACE:
-                        loadScene(new SpaceScene(context));
+                        loadScene(new SpaceScene(context, screen));
                         break;
                     default:
                         Log.e("Level Loading", "Error: Level does not exist.");

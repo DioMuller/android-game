@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.diogomuller.gamelib.core.AudioController;
+import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.entities.BitmapEntity;
 import com.diogomuller.gamelib.entities.ParallaxEntity;
@@ -18,8 +19,8 @@ import java.util.List;
 public class FlappyScene extends BaseScene {
     PhysicsEntity testHero;
 
-    public FlappyScene(Context context) {
-        super(context);
+    public FlappyScene(Context context, SceneView view) {
+        super(context, view);
 
         testHero = new PhysicsEntity("Sprites/flyinghero.png", 2, BitmapEntity.FrameOrientation.VERTICAL, 0.3f);
         testHero.setPosition(new Vector2(50, 50));

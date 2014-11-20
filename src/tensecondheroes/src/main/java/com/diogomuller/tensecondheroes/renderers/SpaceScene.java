@@ -1,8 +1,10 @@
 package com.diogomuller.tensecondheroes.renderers;
 
 import android.content.Context;
+import android.transition.Scene;
 
 import com.diogomuller.gamelib.core.AudioController;
+import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.entities.Entity;
 import com.diogomuller.gamelib.entities.ParallaxEntity;
 import com.diogomuller.gamelib.math.Vector2;
@@ -24,8 +26,8 @@ public class SpaceScene extends BaseScene {
     Random rng = new Random();
     float timeSinceLastSpawn = 0.0f;
 
-    public SpaceScene(Context context){
-        super(context);
+    public SpaceScene(Context context, SceneView view){
+        super(context, view);
 
         hero = new SpaceHero(this, new Vector2(50, 50));
         this.addChild(hero);
@@ -65,7 +67,7 @@ public class SpaceScene extends BaseScene {
             }
         }
 
-        hero.moveToY(nearest.getY() / canvasScale);
+        hero.moveToY(nearest.getY() / view.getCanvasScale());
     }
 
     @Override

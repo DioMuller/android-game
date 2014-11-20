@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import com.diogomuller.gamelib.core.AudioController;
+import com.diogomuller.gamelib.core.GameScene;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.entities.Entity;
@@ -18,16 +19,14 @@ import java.util.List;
 /**
  * Created by Diogo on 09/11/2014.
  */
-public class BaseScene extends SceneView {
+public class BaseScene extends GameScene {
     private Physics physics = Physics.getInstance();
     private static final float HEIGHT = 320.0f;
     protected MainGameActivity parentActivity;
     private Paint guiPaint = new Paint();
 
-    public BaseScene(Context context){
-        super(context, HEIGHT);
-
-        this.showFps = false;
+    public BaseScene(Context context, SceneView view){
+        super(context, view);
 
         parentActivity = (MainGameActivity) context;
 

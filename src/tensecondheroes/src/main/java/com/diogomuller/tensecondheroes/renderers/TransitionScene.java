@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 
 import com.diogomuller.gamelib.core.AudioController;
+import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.tensecondheroes.base.BaseScene;
 import com.diogomuller.tensecondheroes.game.MinigameInfo;
 
@@ -15,8 +16,8 @@ public class TransitionScene extends BaseScene {
     private int level;
     private MinigameInfo minigameInfo;
 
-    public TransitionScene(Context context, int level){
-        super(context);
+    public TransitionScene(Context context, SceneView view,  int level){
+        super(context, view);
         this.level = level;
         AudioController.playSound("Music/Score Time.ogg");
     }
