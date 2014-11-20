@@ -25,4 +25,9 @@ public class MinigameInfo {
     public String getImage(){
         return image;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

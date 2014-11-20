@@ -10,7 +10,7 @@
 
         <!-- Main Screen -->
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.diogomuller.tensecondheroes.activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -21,9 +21,13 @@
         </activity>
         <!-- Game Screen -->
         <activity
-            android:name=".activities.MainGameActivity"
+            android:name="com.diogomuller.tensecondheroes.activities.MainGameActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.diogomuller.tensecondheroes.activities.LevelSelectActivity"
+            android:label="@string/title_activity_level_select" >
         </activity>
     </application>
 

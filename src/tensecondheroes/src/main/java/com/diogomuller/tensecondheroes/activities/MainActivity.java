@@ -51,7 +51,8 @@ public class MainActivity extends Activity {
     }
 
     public void loadlevelClick(View v) {
-
+        Intent intent = new Intent(this, LevelSelectActivity.class);
+        startActivity(intent);
     }
 
     public void highscoreClick(View v) {
