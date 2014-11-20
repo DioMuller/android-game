@@ -38,7 +38,6 @@ public class MainGameActivity extends GameActivity {
     @Override
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
-        AudioController.playMusic("Music/Save Me.ogg");
         loadScene(new SpaceScene(this, screen));
     }
 

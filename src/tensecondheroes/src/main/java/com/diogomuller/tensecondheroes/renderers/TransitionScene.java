@@ -19,7 +19,7 @@ public class TransitionScene extends BaseScene {
     public TransitionScene(Context context, SceneView view,  int level){
         super(context, view);
         this.level = level;
-        AudioController.playSound("Music/Score Time.ogg");
+        AudioController.playMusic("Music/Score Time.ogg");
     }
 
     @Override
