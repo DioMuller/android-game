@@ -2,7 +2,6 @@ package com.diogomuller.tensecondheroes.entities.space;
 
 import com.diogomuller.gamelib.entities.BitmapEntity;
 import com.diogomuller.gamelib.entities.Entity;
-import com.diogomuller.gamelib.entities.PhysicsEntity;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.tensecondheroes.renderers.SpaceScene;
 

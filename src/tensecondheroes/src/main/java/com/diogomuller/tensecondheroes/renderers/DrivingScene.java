@@ -74,7 +74,7 @@ public class DrivingScene extends BaseScene {
         removeChild(enemy);
         if( collider != null ) removeChild(collider);
 
-        AudioController.playSound("Sound/pickup.wav");
+        AudioController.playSound("Sound/explosion.wav");
 
         if( collider == hero ){
             parentActivity.dieAndChangeLevel();

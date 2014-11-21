@@ -5,35 +5,40 @@ import android.graphics.Color;
 
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.SceneView;
+import com.diogomuller.gamelib.entities.Entity;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.entities.BitmapEntity;
 import com.diogomuller.gamelib.entities.ParallaxEntity;
-import com.diogomuller.gamelib.entities.PhysicsEntity;
 import com.diogomuller.tensecondheroes.base.BaseScene;
+import com.diogomuller.tensecondheroes.entities.flappy.FlappyHero;
+import com.diogomuller.tensecondheroes.entities.flappy.FlappyObstacle;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Diogo on 16/11/2014.
  */
 public class FlappyScene extends BaseScene {
-    PhysicsEntity testHero;
+    private final float SPAWN_TIME = 3.0f;
+
+    private FlappyHero hero;
+    private static Random rng = new Random();
+    float timeSinceLastSpawn = 2.0f;
 
     public FlappyScene(Context context, SceneView view) {
         super(context, view);
 
-        testHero = new PhysicsEntity("Sprites/flyinghero.png", 2, BitmapEntity.FrameOrientation.VERTICAL, 0.3f);
-        testHero.setPosition(new Vector2(50, 50));
-        testHero.setCategoryMask(2);
-        testHero.setCollisionMask(4);
-        testHero.setCollisionThreshold(8.0f);
-        this.addChild(testHero);
+        hero = new FlappyHero(this, new Vector2(50, 50));
 
-        BitmapEntity testGround = new BitmapEntity(Color.argb(255, 0, 255, 128), getSize().getX(), 60);
-        testGround.setPosition(new Vector2(getSize().getX() / 2 , getSize().getY() - 15));
-        testGround.setCategoryMask(4);
-        testGround.setCollisionMask(2);
-        this.addChild(testGround);
+        this.addChild(hero);
+
+        BitmapEntity ground = new BitmapEntity(Color.argb(255, 0, 255, 128), getSize().getX(), 60);
+        ground.setPosition(new Vector2(getSize().getX() / 2 , getSize().getY() - 15));
+        ground.setCategoryMask(2);
+        ground.setCollisionMask(5);
+        ground.setContactMask(5);
+        this.addChild(ground);
 
         ParallaxEntity background = new ParallaxEntity("Images/background_morningsky.png", getSize(), 100.0f );
         this.addChild(background);
@@ -43,7 +48,45 @@ public class FlappyScene extends BaseScene {
 
     @Override
     public void onTouchEntered(List<Vector2> points) {
-        testHero.applyForce(new Vector2(0.0f, -5.0f));
-        AudioController.playSound("Sound/drop.wav");
+        hero.impulse();
+    }
+
+
+    @Override
+    public void update(float deltaTime) {
+        timeSinceLastSpawn += deltaTime;
+
+        if( timeSinceLastSpawn > SPAWN_TIME ){
+            timeSinceLastSpawn = 0.0f;
+            addObstacle();
+        }
+
+        super.update(deltaTime);
+    }
+
+    public void endScene(){
+        parentActivity.dieAndChangeLevel();
+    }
+
+    public void addObstacle(){
+        FlappyObstacle enemy = new FlappyObstacle(this, new Vector2(getSize().getX(), 50.0f + rng.nextFloat() * 220.0f ), 200.0f, 10.0f);
+        addChild(enemy);
+    }
+
+    public void removeObstacle(Entity enemy, Entity collider){
+        removeChild(enemy);
+        if( collider != null ) removeChild(collider);
+
+
+
+        if( collider == hero ){
+            AudioController.playSound("Sound/explosion.wav");
+            parentActivity.dieAndChangeLevel();
+        }
+    }
+
+    public void addScore(){
+        AudioController.playSound("Sound/pickup.wav");
+        parentActivity.addScore(1);
     }
 }

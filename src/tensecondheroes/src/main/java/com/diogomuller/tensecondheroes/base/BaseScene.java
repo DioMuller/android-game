@@ -11,7 +11,6 @@ import com.diogomuller.gamelib.core.GameScene;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.entities.Entity;
-import com.diogomuller.gamelib.physics.Physics;
 import com.diogomuller.tensecondheroes.activities.MainGameActivity;
 
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.List;
  * Created by Diogo on 09/11/2014.
  */
 public class BaseScene extends GameScene {
-    private Physics physics = Physics.getInstance();
     private static final float HEIGHT = 320.0f;
     protected MainGameActivity parentActivity;
     private Paint guiPaint = new Paint();
@@ -29,9 +27,6 @@ public class BaseScene extends GameScene {
         super(context, view);
 
         parentActivity = (MainGameActivity) context;
-
-        physics.setGravity(new Vector2(0, 5));
-        physics.setPixelsPerMeter(4);
     }
 
     @Override
