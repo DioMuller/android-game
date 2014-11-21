@@ -68,6 +68,9 @@ public class BaseScene extends GameScene {
             guiPaint.setColor(Color.WHITE);
             guiPaint.setTextSize(42);
         }
-        canvas.drawText(Integer.toString(time), getSize().getX() - 80, HEIGHT - 20, guiPaint);
+
+        if(parentActivity.showCounter()) {
+            canvas.drawText(Integer.toString(time), getSize().getX() - 80, HEIGHT - 20, guiPaint);
+        }
     }
 }

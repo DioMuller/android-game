@@ -1,6 +1,7 @@
 package com.diogomuller.tensecondheroes.activities;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,9 +36,11 @@ public class LevelSelectActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id){
-        switch(position) {
-            default:
-                break;
-        }
+        Intent intent = new Intent(this, MainGameActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("Level", position);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 }

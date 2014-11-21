@@ -23,7 +23,7 @@ public class Minigames {
 
 
     public static int getRandomGame(){
-        return rng.nextInt() % COUNT;
+        return Math.abs(rng.nextInt() % COUNT);
     }
 
     public static MinigameInfo getInfo(int minigame){

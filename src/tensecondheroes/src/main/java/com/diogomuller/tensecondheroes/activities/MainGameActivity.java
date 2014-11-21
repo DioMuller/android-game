@@ -32,6 +32,8 @@ public class MainGameActivity extends GameActivity {
     /** Next level */
     private int nextLevel = 0;
 
+    private boolean infiniteMode = false;
+
     public MainGameActivity() {
         super();
     }
@@ -39,7 +41,15 @@ public class MainGameActivity extends GameActivity {
     @Override
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
-        //loadScene(new SpaceScene(this, screen));
+
+        Bundle extras = getIntent().getExtras();
+
+        if( extras != null && extras.containsKey("Level") ){
+            nextLevel = extras.getInt("Level");
+            lives = 0;
+            infiniteMode = true;
+        }
+
         goToNextLevel();
     }
 
@@ -54,6 +64,10 @@ public class MainGameActivity extends GameActivity {
 
     public float getRemainingTime() {
         return timeToChange;
+    }
+
+    public boolean showCounter(){
+        return !isTransition && !infiniteMode;
     }
 
     public void subtractLife(){
@@ -72,7 +86,11 @@ public class MainGameActivity extends GameActivity {
         timeToChange -= delta;
 
         if(timeToChange <= 0){
-            goToNextLevel();
+            if( !infiniteMode ) {
+                goToNextLevel();
+            } else if( infiniteMode && isTransition) {
+                goToNextLevel();
+            }
         }
     }
 
@@ -92,7 +110,7 @@ public class MainGameActivity extends GameActivity {
         isTransition = !isTransition;
 
         if(isTransition){
-            nextLevel = Minigames.getRandomGame();
+            if( !infiniteMode ) nextLevel = Minigames.getRandomGame();
             timeToChange = SPLASH_TIME;
             loadTransition();
         } else {
