@@ -43,7 +43,7 @@ public class FlappyScene extends BaseScene {
 
     @Override
     public void onTouchEntered(List<Vector2> points) {
-        testHero.applyForce(new Vector2(0.0f, -2500.0f));
+        testHero.applyForce(new Vector2(0.0f, -5.0f));
         AudioController.playSound("Sound/drop.wav");
     }
 }
