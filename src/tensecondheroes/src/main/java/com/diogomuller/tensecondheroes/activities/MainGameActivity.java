@@ -124,6 +124,9 @@ public class MainGameActivity extends GameActivity {
                     case Minigames.DRIVE:
                         loadScene(new DrivingScene(context, screen));
                         break;
+                    case Minigames.FLAPPY:
+                        loadScene(new FlappyScene(context, screen));
+                        break;
                     default:
                         Log.e("Level Loading", "Error: Level does not exist.");
                         goToNextLevel();

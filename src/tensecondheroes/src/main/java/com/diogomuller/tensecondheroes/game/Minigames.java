@@ -17,8 +17,9 @@ public class Minigames {
 
     public static final int SPACE = 0;
     public static final int DRIVE = 1;
+    public static final int FLAPPY = 2;
 
-    public static final int COUNT = 2;
+    public static final int COUNT = 3;
 
 
     public static int getRandomGame(){
@@ -31,6 +32,8 @@ public class Minigames {
                 return new MinigameInfo("Explore Space!", "Captain Space", "Sprites/spacehero_thumb.png");
             case DRIVE:
                 return new MinigameInfo("Avoid the Civilians!", "Forklift Driver", "Sprites/worker_thumb.png");
+            case FLAPPY:
+                return new MinigameInfo("Flap!", "Towelman", "Sprites/flyinghero_thumb.png");
             default:
                 return null;
         }
