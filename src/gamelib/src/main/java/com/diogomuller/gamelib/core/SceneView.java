@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import com.diogomuller.gamelib.math.Vector2;
 import com.diogomuller.gamelib.entities.Entity;
@@ -52,7 +53,6 @@ public class SceneView extends SurfaceView implements Runnable {
         super(context);
 
         this.context = context;
-        //instance = this;
 
         holder = this.getHolder();
         paint.setStrokeWidth(1.0f);

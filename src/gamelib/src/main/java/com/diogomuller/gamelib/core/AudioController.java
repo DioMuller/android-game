@@ -61,8 +61,12 @@ public class AudioController {
     }
 
     public static void resumeMusic(){
-        if(!mediaPlayer.isPlaying())
-            mediaPlayer.start();
+        try {
+            if (!mediaPlayer.isPlaying())
+                mediaPlayer.start();
+        } catch(IllegalStateException ieex) {
+            Log.d("Audio Player - Resume", "Invalid State.");
+        }
     }
     //endregion Music Methods
 

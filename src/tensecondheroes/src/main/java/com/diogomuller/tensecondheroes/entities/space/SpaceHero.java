@@ -32,7 +32,8 @@ public class SpaceHero extends BitmapEntity {
     }
 
     public void activate(boolean value){
-        shootingTime = 0.0f;
+        if( value )shootingTime = 0.0f;
+        else moving = false;
     }
 
     public boolean isMoving(){

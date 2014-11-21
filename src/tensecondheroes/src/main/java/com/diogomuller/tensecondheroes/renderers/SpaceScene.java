@@ -80,7 +80,7 @@ public class SpaceScene extends BaseScene {
     public void addShoot(Vector2 position){
         SpaceShot shot = new SpaceShot(this, 150.0f, 4.0f);
         shot.setPosition((Vector2) position.clone());
-        AudioController.playSound("Sound/pickup.wav");
+        AudioController.playSound("Sound/drop.wav");
         addChild(shot);
     }
 

@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name="com.diogomuller.tensecondheroes.activities.LevelSelectActivity"
-            android:label="@string/title_activity_level_select" >
+            android:label="@string/title_activity_level_select"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
