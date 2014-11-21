@@ -108,8 +108,8 @@ public class BitmapEntity extends BasicEntity {
     public boolean draw(Canvas canvas, Matrix transformations) {
         if( !super.draw(canvas, transformations) ) return false;
 
-        float halfWidth = (size.getX() / 2.0f) * scale.getX();
-        float halfHeight =(size.getY() / 2.0f) * scale.getY();
+        float halfWidth = (size.getX() / 2.0f);
+        float halfHeight =(size.getY() / 2.0f);
 
         Matrix matrix = new Matrix(transformations);
         matrix.preTranslate( position.getX() - halfWidth, position.getY() - halfHeight);
