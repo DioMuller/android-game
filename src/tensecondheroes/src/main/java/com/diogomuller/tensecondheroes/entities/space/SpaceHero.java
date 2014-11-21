@@ -66,9 +66,4 @@ public class SpaceHero extends BitmapEntity {
             }
         }
     }
-
-    @Override
-    public void onCollision(Entity other) {
-        // Do Nothing.
-    }
 }

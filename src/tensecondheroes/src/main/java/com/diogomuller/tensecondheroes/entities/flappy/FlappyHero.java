@@ -25,7 +25,6 @@ public class FlappyHero extends BitmapEntity {
         this.setPosition(position);
         this.setCategoryMask(1);
         this.setContactMask(6);
-        this.setCollisionMask(6);
         this.setCollisionThreshold(8.0f);
     }
 

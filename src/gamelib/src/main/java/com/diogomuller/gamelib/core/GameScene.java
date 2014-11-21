@@ -52,7 +52,6 @@ public class GameScene implements Entity {
             if( child.getCategoryMask() != 0 ) {
                 for(int j = i + 1; j < children.size(); j++) {
                     Entity other = children.get(j);
-                    if( (child.getCollisionMask() & other.getCategoryMask()) != 0) child.checkCollision(other);
                     if( (child.getContactMask() & other.getCategoryMask()) != 0)child.checkContact(other);
                 }
             }
@@ -166,26 +165,6 @@ public class GameScene implements Entity {
     }
 
     /**
-     * Sets the node collision mask. This will make the node collide only with nodes of this category.
-     *
-     * @param mask New Collision mask.
-     */
-    @Override
-    public void setCollisionMask(int mask) {
-        // Nothing Else To Do
-    }
-
-    /**
-     * Gets the node collision mask. This will make the node collide only with nodes of this category.
-     *
-     * @return Node Collision Mask.
-     */
-    @Override
-    public int getCollisionMask() {
-        return 0;
-    }
-
-    /**
      * Sets the node contact mask. If a node with an id on the contact mask intersects with this, the onContact event will be fired.
      *
      * @param mask New contact mask.
@@ -216,16 +195,6 @@ public class GameScene implements Entity {
     }
 
     /**
-     * Event Called on Collision. Should be used only if the node works differently on collision.
-     *
-     * @param other Other body.
-     */
-    @Override
-    public void onCollision(Entity other) {
-        // Nothing Else To Do
-    }
-
-    /**
      * Event called on contact. Will be called when there is contact, but no collision.
      *
      * @param other Other body.
@@ -243,17 +212,6 @@ public class GameScene implements Entity {
      */
     @Override
     public boolean checkContact(Entity entity) {
-        return false;
-    }
-
-    /**
-     * Checks if there is collision with other node.
-     *
-     * @param entity Other node.
-     * @return Is there collision with other nodes?
-     */
-    @Override
-    public boolean checkCollision(Entity entity) {
         return false;
     }
     //endregion Collision

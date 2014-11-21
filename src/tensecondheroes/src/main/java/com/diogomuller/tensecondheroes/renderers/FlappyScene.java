@@ -36,7 +36,6 @@ public class FlappyScene extends BaseScene {
         BitmapEntity ground = new BitmapEntity(Color.argb(255, 0, 255, 128), getSize().getX(), 60);
         ground.setPosition(new Vector2(getSize().getX() / 2 , getSize().getY() - 15));
         ground.setCategoryMask(2);
-        ground.setCollisionMask(5);
         ground.setContactMask(5);
         this.addChild(ground);
 

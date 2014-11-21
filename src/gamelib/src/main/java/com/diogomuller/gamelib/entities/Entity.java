@@ -116,21 +116,6 @@ public interface Entity {
     public int getCategoryMask();
     //endregion Category Mask
 
-    //region Collision Mask
-
-    /**
-     * Sets the node collision mask. This will make the node collide only with nodes of this category.
-     * @param mask New Collision mask.
-     */
-    public void setCollisionMask(int mask);
-
-    /**
-     * Gets the node collision mask. This will make the node collide only with nodes of this category.
-     * @return Node Collision Mask.
-     */
-    public int getCollisionMask();
-    //endregion Collision Mask
-
     //region Contact Mask
     /**
      * Sets the node contact mask. If a node with an id on the contact mask intersects with this, the onContact event will be fired.
@@ -154,13 +139,6 @@ public interface Entity {
     //endregion Collision Rect
 
     //region Events
-
-    /**
-     * Event Called on Collision. Should be used only if the node works differently on collision.
-     * @param other Other body.
-      */
-    public void onCollision(Entity other);
-
     /**
      * Event called on contact. Will be called when there is contact, but no collision.
      * @param other Other body.
@@ -173,13 +151,6 @@ public interface Entity {
      * @return Is there contact with other nodes?
      */
     public boolean checkContact(Entity entity);
-
-    /**
-     * Checks if there is collision with other node.
-     * @param entity Other node.
-     * @return Is there collision with other nodes?
-     */
-    public boolean checkCollision(Entity entity);
     //endregion Events
 
     //endregion Collision Methods

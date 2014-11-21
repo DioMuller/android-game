@@ -31,7 +31,6 @@ public abstract class BasicEntity implements Entity {
     protected float collisionThreshold = 0.0f;
 
     private int categoryMask = 0;
-    private int collisionMask = 0;
     private int contactMask = 0;
     //endregion Attributes
 
@@ -178,15 +177,6 @@ public abstract class BasicEntity implements Entity {
         return this.categoryMask;
     }
 
-    @Override
-    public void setCollisionMask(int mask) {
-        this.collisionMask = mask;
-    }
-
-    @Override
-    public int getCollisionMask() {
-        return this.collisionMask;
-    }
 
     @Override
     public void setContactMask(int mask) {
@@ -201,13 +191,6 @@ public abstract class BasicEntity implements Entity {
     @Override
     public Rect getCollisionRectange() {
         return collisionRect;
-    }
-
-    @Override
-    public void onCollision(Entity other) {
-        if( (other.getCategoryMask() & this.getCollisionMask()) != 0) {
-            this.position = lastPosition;
-        }
     }
 
     @Override
@@ -226,24 +209,6 @@ public abstract class BasicEntity implements Entity {
             if (this.getCollisionRectange().intersect(entity.getCollisionRectange())) {
                 onContact(entity);
                 entity.onContact(this);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks if there is collision with other node.
-     * @param entity Other node.
-     * @return Is there collision with other nodes?
-     */
-    @Override
-    public boolean checkCollision(Entity entity){
-        if( (entity.getCategoryMask() & this.getCollisionMask()) != 0 ) {
-            if (this.getCollisionRectange().intersect(entity.getCollisionRectange())) {
-                onCollision(entity);
-                entity.onCollision(this);
                 return true;
             }
         }
