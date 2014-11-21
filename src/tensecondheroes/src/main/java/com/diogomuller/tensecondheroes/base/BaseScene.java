@@ -46,7 +46,7 @@ public class BaseScene extends GameScene {
     }
 
     public void drawGui(Canvas canvas){
-        guiPaint.setColor(Color.WHITE);
+        guiPaint.setColor(Color.RED);
         guiPaint.setTextSize(16);
         canvas.drawText("Score: " + parentActivity.getScore(), 15, 15, guiPaint);
         canvas.drawText("Lives: " + parentActivity.getLives(), getSize().getX() - 80, 15, guiPaint);
