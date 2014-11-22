@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.GameActivity;
+import com.diogomuller.tensecondheroes.game.HighScores;
 import com.diogomuller.tensecondheroes.game.Minigames;
 import com.diogomuller.tensecondheroes.renderers.DrivingScene;
 import com.diogomuller.tensecondheroes.renderers.FlappyScene;
@@ -71,14 +72,6 @@ public class MainGameActivity extends GameActivity {
         return !isTransition && !infiniteMode;
     }
 
-    public void subtractLife(){
-        lives--;
-
-        if(lives < 0){
-            //TODO: Go to results screen.
-        }
-    }
-
     public void addScore(int score){
         this.score += score;
     }
@@ -101,7 +94,12 @@ public class MainGameActivity extends GameActivity {
         if( lives >= 0) {
             goToNextLevel();
         } else {
-            //TODO: Game Over.
+            if( !infiniteMode ) {
+                HighScores.setHighscore(nextLevel, score - lastScore);
+                HighScores.setMainGameHighscore(score);
+            } else {
+                HighScores.setHighscore(nextLevel, score);
+            }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
@@ -111,7 +109,10 @@ public class MainGameActivity extends GameActivity {
         isTransition = !isTransition;
 
         if(isTransition){
-            if( !infiniteMode ) nextLevel = Minigames.getRandomGame();
+            if( !infiniteMode ) {
+                HighScores.setHighscore(nextLevel, score - lastScore);
+                nextLevel = Minigames.getRandomGame();
+            }
             timeToChange = SPLASH_TIME;
             loadTransition();
         } else {
@@ -132,6 +133,7 @@ public class MainGameActivity extends GameActivity {
 
     public void loadNextLevel(){
         final Context context = this;
+        lastScore = score;
 
         runOnUiThread(new Runnable() {
             @Override

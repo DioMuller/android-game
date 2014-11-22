@@ -13,12 +13,16 @@ import android.view.WindowManager;
 import com.diogomuller.gamelib.core.Assets;
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.tensecondheroes.R;
+import com.diogomuller.tensecondheroes.game.HighScores;
 
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize Highscores.
+        HighScores.initialize(this);
 
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -56,6 +60,7 @@ public class MainActivity extends Activity {
     }
 
     public void highscoreClick(View v) {
-
+        Intent intent = new Intent(this, HighscoreAcitivity.class);
+        startActivity(intent);
     }
 }
