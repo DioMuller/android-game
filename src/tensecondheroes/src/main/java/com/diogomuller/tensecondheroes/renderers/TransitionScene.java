@@ -28,7 +28,7 @@ public class TransitionScene extends BaseScene {
         super(context, view);
         this.level = level;
         minigameInfo = Minigames.getInfo(level);
-        AudioController.playMusic("Music/Score Time.ogg");
+        AudioController.playMusic("Music/Score Time.mp3");
 
         paint.setTypeface(Typeface.createFromAsset(Assets.getAssetManager(), "Fonts/ChalkDust.ttf"));
 

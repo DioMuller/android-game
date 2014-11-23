@@ -19,12 +19,12 @@ public class ShooterScene  extends BaseScene {
     private final float SPAWN_TIME = 1.5f;
 
     Random rng = new Random();
-    float timeSinceLastSpawn = 0.0f;
+    float timeSinceLastSpawn = SPAWN_TIME;
 
     public ShooterScene(Context context, SceneView view) {
         super(context, view);
 
-        AudioController.playMusic("Music/Save Me.ogg");
+        AudioController.playMusic("Music/Save Me.mp3");
     }
 
     @Override

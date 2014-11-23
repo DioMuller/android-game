@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.tensecondheroes.R;
 import com.diogomuller.tensecondheroes.game.MinigameInfo;
 import com.diogomuller.tensecondheroes.game.Minigames;
@@ -32,6 +33,22 @@ public class LevelSelectActivity extends ListActivity {
                 arrayInfo);
 
         setListAdapter(arrayAdapter);
+
+        AudioController.playMusic("Music/Credits.mp3");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        AudioController.stopMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AudioController.playMusic("Music/Credits.mp3");
     }
 
     @Override

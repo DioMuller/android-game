@@ -35,7 +35,7 @@ public class SpaceScene extends BaseScene {
         ParallaxEntity background = new ParallaxEntity("Images/background_nightsky.png", getSize(), 100.0f );
         this.addChild(background);
 
-        AudioController.playMusic("Music/Save Me.ogg");
+        AudioController.playMusic("Music/Save Me.mp3");
     }
 
     @Override

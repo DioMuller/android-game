@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.tensecondheroes.game.HighScores;
 import com.diogomuller.tensecondheroes.game.HighscoreInfo;
 
@@ -31,6 +32,21 @@ public class HighscoreAcitivity extends ListActivity {
                 arrayInfo);
 
         setListAdapter(arrayAdapter);
+        AudioController.playMusic("Music/Credits.mp3");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        AudioController.stopMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AudioController.playMusic("Music/Credits.mp3");
     }
 
     @Override

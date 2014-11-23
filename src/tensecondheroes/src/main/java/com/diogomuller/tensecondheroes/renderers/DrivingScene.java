@@ -33,7 +33,7 @@ public class DrivingScene extends BaseScene {
         ParallaxEntity background = new ParallaxEntity("Images/background_cement.png", getSize(), 100.0f );
         this.addChild(background);
 
-        AudioController.playMusic("Music/Save Me.ogg");
+        AudioController.playMusic("Music/Save Me.mp3");
     }
 
     @Override

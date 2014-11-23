@@ -42,7 +42,7 @@ public class FlappyScene extends BaseScene {
         ParallaxEntity background = new ParallaxEntity("Images/background_morningsky.png", getSize(), 100.0f );
         this.addChild(background);
 
-        AudioController.playMusic("Music/We Don't Need a Hero.ogg");
+        AudioController.playMusic("Music/We Don't Need a Hero.mp3");
     }
 
     @Override

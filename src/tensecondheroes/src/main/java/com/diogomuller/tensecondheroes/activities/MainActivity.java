@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Assets.setAssetManager(this.getAssets());
-        AudioController.playMusic("Music/Press Start.ogg");
+        AudioController.playMusic("Music/Press Start.mp3");
 
         setContentView(R.layout.activity_main);
     }
@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        AudioController.playMusic("Music/Press Start.ogg");
+        AudioController.playMusic("Music/Press Start.mp3");
     }
 
     public void newgameClick(View v) {
