@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gamelib/gamelib.iml" filepath="$PROJECT_DIR$/gamelib/gamelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/src.iml" filepath="$PROJECT_DIR$/src.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensecondheroes/tensecondheroes.iml" filepath="$PROJECT_DIR$/tensecondheroes/tensecondheroes.iml" />
     </modules>
