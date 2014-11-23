@@ -12,6 +12,7 @@ import com.diogomuller.tensecondheroes.game.Minigames;
 import com.diogomuller.tensecondheroes.renderers.DrivingScene;
 import com.diogomuller.tensecondheroes.renderers.FlappyScene;
 import com.diogomuller.tensecondheroes.renderers.RunningScene;
+import com.diogomuller.tensecondheroes.renderers.ShooterScene;
 import com.diogomuller.tensecondheroes.renderers.SpaceScene;
 import com.diogomuller.tensecondheroes.renderers.TransitionScene;
 
@@ -150,6 +151,9 @@ public class MainGameActivity extends GameActivity {
                         break;
                     case Minigames.RUN:
                         loadScene(new RunningScene(context, screen));
+                        break;
+                    case Minigames.SHOOT:
+                        loadScene(new ShooterScene(context, screen));
                         break;
                     default:
                         Log.e("Level Loading", "Error: Level does not exist.");

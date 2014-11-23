@@ -36,7 +36,10 @@ public class FlappyHero extends BitmapEntity {
             position.setY(position.getY() + (speed * deltaTime));
             speed -= (FALL_SPEED * deltaTime);
 
-            if( position.getY() < 0 ) position.setY(0);
+            if( position.getY() < 0 ){
+                position.setY(0);
+                speed = 0;
+            }
         }
     }
 
