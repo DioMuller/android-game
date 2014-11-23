@@ -35,11 +35,5 @@ public class HighscoreAcitivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id){
-        Intent intent = new Intent(this, MainGameActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("Level", position);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
     }
 }

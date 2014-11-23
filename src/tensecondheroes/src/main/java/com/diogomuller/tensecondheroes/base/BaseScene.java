@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
+import com.diogomuller.gamelib.core.Assets;
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.GameScene;
 import com.diogomuller.gamelib.core.SceneView;
@@ -27,6 +29,7 @@ public class BaseScene extends GameScene {
         super(context, view);
 
         parentActivity = (MainGameActivity) context;
+        guiPaint.setTypeface(Typeface.createFromAsset(Assets.getAssetManager(), "Fonts/ChalkDust.ttf"));
     }
 
     @Override
@@ -49,6 +52,7 @@ public class BaseScene extends GameScene {
         guiPaint.setColor(Color.RED);
         guiPaint.setTextSize(16);
         canvas.drawText("Score: " + parentActivity.getScore(), 15, 15, guiPaint);
+        canvas.drawText("Best: " + parentActivity.getHighscore(), 15, 30, guiPaint);
         canvas.drawText("Lives: " + parentActivity.getLives(), getSize().getX() - 80, 15, guiPaint);
 
         int time = (int) parentActivity.getRemainingTime();

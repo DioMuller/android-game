@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
+import com.diogomuller.gamelib.core.Assets;
 import com.diogomuller.gamelib.core.AudioController;
 import com.diogomuller.gamelib.core.SceneView;
 import com.diogomuller.gamelib.math.Vector2;
@@ -27,6 +29,8 @@ public class TransitionScene extends BaseScene {
         this.level = level;
         minigameInfo = Minigames.getInfo(level);
         AudioController.playMusic("Music/Score Time.ogg");
+
+        paint.setTypeface(Typeface.createFromAsset(Assets.getAssetManager(), "Fonts/ChalkDust.ttf"));
 
         position = getSize().divide(2.0f);
 

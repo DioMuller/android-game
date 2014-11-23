@@ -35,6 +35,8 @@ public class MainGameActivity extends GameActivity {
     /** Next level */
     private int nextLevel = 0;
 
+    private int highscore = -1;
+
     private boolean infiniteMode = false;
 
     public MainGameActivity() {
@@ -63,6 +65,16 @@ public class MainGameActivity extends GameActivity {
 
     public int getScore(){
         return score;
+    }
+
+    public int getHighscore(){
+        if( highscore == -1 ) {
+            highscore = infiniteMode ? HighScores.getHighscore(nextLevel).getScore() : HighScores.getMainGameHighscore().getScore();
+        }
+
+        if( score > highscore ) highscore = score;
+
+        return highscore;
     }
 
     public float getRemainingTime() {
